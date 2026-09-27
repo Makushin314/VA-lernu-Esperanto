@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Полный грамматический справочник эсперанто: алфавит, части речи, времена, причастия, коррелятивы, словообразование — с примерами." />
+<title>Грамматика — VA Esperanto</title>
+<link rel="icon" href="images/VAlogo.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/grammar.css" />
+
+<!-- Мгновенное применение темы и позиции сайдбара -->
+<script>
+(function () {
+    try {
+        var T = {
+            dark:{'--bg':'#0D110F','--card':'#151A17','--card2':'#1C231E','--input':'#202821','--border':'#29332C','--text':'#F3F6F3','--muted':'#9CA79E','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            light:{'--bg':'#F2F6F2','--card':'#FFFFFF','--card2':'#F7FAF7','--input':'#EEF3EE','--border':'#D9E2D9','--text':'#172019','--muted':'#68736B','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            winter:{'--bg':'#0B1520','--card':'#132234','--card2':'#182B40','--input':'#1D344C','--border':'#274562','--text':'#EAF4FB','--muted':'#8FA8C0','--green':'#4DA6FF','--green-hover':'#6BB8FF','--danger':'#E85D75'},
+            forest:{'--bg':'#0A130E','--card':'#122018','--card2':'#17291F','--input':'#1C3126','--border':'#253D2F','--text':'#E8F2E8','--muted':'#8FAF93','--green':'#2E8B57','--green-hover':'#3DA66A','--danger':'#C9645B'},
+            autumn: { '--bg':'#1A1210','--card':'#241A15','--card2':'#2E211B','--input':'#342720','--border':'#42332A','--text':'#F5EDE5','--muted':'#B8A398','--green':'#D2691E','--green-hover':'#E67E22','--danger':'#C0392B' },
+            cat:    { '--bg':'#14101C','--card':'#1C1826','--card2':'#231E30','--input':'#2A2338','--border':'#3A2F4A','--text':'#F0EAF5','--muted':'#9C93B0','--green':'#F5A623','--green-hover':'#FFB84D','--danger':'#E85D75' }
+        };
+        var r = document.documentElement;
+        var k = localStorage.getItem('va_eo_theme') || 'dark';
+        var t = T[k] || T.dark;
+        r.setAttribute('data-theme-key', k);
+        for (var i in t) if (t.hasOwnProperty(i)) r.style.setProperty(i, t[i]);
+        var p = localStorage.getItem('va_eo_sidebar_pos') || (window.innerWidth<=700?'top':'left');
+        if (p!=='left' && p!=='top') p='left';
+        r.setAttribute('data-sidebar-pos', p);
+        setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-nav-ready')) {
+                document.documentElement.setAttribute('data-nav-ready', '1');
+            }
+        }, 1200);
+    } catch(e){}
+})();
+</script>
+
+<style>
+/* Дополнительные стили для страницы грамматики */
+.gr-header { margin-bottom: 22px; }
+.gr-header h2 { font-size: 28px; font-weight: 800; line-height: 1.25; margin-bottom: 6px; }
+.gr-header p { color: var(--muted); font-size: 15px; line-height: 1.55; max-width: 720px; }
+
+.gr-toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 22px;
+}
+.gr-toc-title {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+.gr-toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 6px;
+}
+.gr-toc a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all var(--transition);
+    text-decoration: none;
+    cursor: pointer;
+}
+.gr-toc a:hover {
+    background: var(--card2);
+    color: var(--text);
+    transform: translateX(3px);
+}
+.gr-toc a .toc-icon { font-size: 16px; line-height: 1; }
+
+.gr-search-bar {
+    position: relative;
+    margin-bottom: 16px;
+}
+.gr-search-bar .grammar-search { padding-right: 44px; }
+.gr-search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--card2);
+    border: none;
+    color: var(--muted);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    transition: all var(--transition);
+}
+.gr-search-clear:hover { background: var(--border); color: var(--text); }
+.gr-search-clear.visible { display: inline-flex; }
+
+.gr-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+}
+.gr-empty .ge-icon { font-size: 56px; margin-bottom: 14px; opacity: 0.5; line-height: 1; }
+
+.gr-level-chip {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    background: var(--card2);
+    color: var(--muted);
+    margin-left: 8px;
+    line-height: 1.4;
+    vertical-align: middle;
+}
+.gr-level-chip.a1 { background: rgba(0,160,0,0.15); color: var(--green); }
+.gr-level-chip.a2 { background: rgba(74,144,226,0.15); color: var(--blue); }
+.gr-level-chip.b1 { background: rgba(156,39,176,0.15); color: var(--purple); }
+.gr-level-chip.b2 { background: rgba(229,184,11,0.15); color: var(--gold); }
+
+/* Таблицы внутри грамматики — компактнее, чем в уроках */
+.grammar-article-body table {
+    font-size: 13px;
+    margin: 10px 0 14px;
+}
+.grammar-article-body th { font-size: 11px; padding: 7px 10px; }
+.grammar-article-body td { padding: 7px 10px; }
+
+/* Примеры строкой */
+.grammar-article-body .ex {
+    background: var(--input);
+    border-left: 3px solid var(--green);
+    border-radius: 8px;
+    padding: 9px 14px;
+    margin: 6px 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+.grammar-article-body .ex b { color: var(--green); font-weight: 700; }
+.grammar-article-body .ex span.ru { color: var(--muted); font-style: italic; }
+
+.grammar-article-body .rule-box {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+}
+.grammar-article-body .rule-box b { color: var(--green); }
+
+.grammar-article-body ul li { margin-bottom: 5px; line-height: 1.65; }
+
+/* Мобильный */
+@media (max-width: 700px) {
+    .gr-header h2 { font-size: 22px; }
+    .gr-toc { padding: 14px 16px; }
+    .gr-toc-grid { grid-template-columns: 1fr 1fr; }
+    .gr-toc a { padding: 7px 10px; font-size: 12.5px; }
+    .grammar-article-body .ex { font-size: 13px; padding: 8px 12px; }
+    .grammar-article-body .rule-box { font-size: 13px; padding: 10px 13px; }
+}
+@media (max-width: 420px) {
+    .gr-toc-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a class="logo" href="index.html" title="VA Esperanto — на главную">
+        <div class="logo-icon">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 2 L60 36.25 L95.65 35.17 L66.17 55.25 L78.21 88.83 L50 67 L21.79 88.83 L33.83 55.25 L4.35 35.17 L40 36.25 Z"/>
+    </svg>
+</div>
+        <div class="logo-text">
+            <h1>VA Esperanto</h1>
+            <span>Lernu Esperanton</span>
+        </div>
+    </a>
+    <nav id="nav">
+        <a class="nav-btn" href="index.html" title="Главная">
+            <span class="nav-icon">🏠</span><span class="nav-label">Главная</span>
+        </a>
+        <div class="nav-section-label">Kursoj</div>
+        <a class="nav-btn" href="courses/a1.html" title="Уровень A1">
+            <span class="nav-icon">🌱</span><span class="nav-label">Уровень A1</span>
+            <span class="nav-badge" id="navBadgeA1">0/18</span>
+        </a>
+        <a class="nav-btn" href="courses/a2.html" title="Уровень A2">
+            <span class="nav-icon">🌿</span><span class="nav-label">Уровень A2</span>
+            <span class="nav-badge" id="navBadgeA2">0/16</span>
+        </a>
+        <a class="nav-btn" href="courses/b1.html" title="Уровень B1">
+            <span class="nav-icon">🌳</span><span class="nav-label">Уровень B1</span>
+            <span class="nav-badge" id="navBadgeB1">0/18</span>
+        </a>
+        <a class="nav-btn" href="courses/b2.html" title="Уровень B2">
+            <span class="nav-icon">🌲</span><span class="nav-label">Уровень B2</span>
+            <span class="nav-badge" id="navBadgeB2">0/12</span>
+        </a>
+        <div class="nav-section-label">Rimedoj</div>
+        <a class="nav-btn active" href="grammar.html" title="Грамматика">
+            <span class="nav-icon">📖</span><span class="nav-label">Грамматика</span>
+        </a>
+        <a class="nav-btn" href="flashcards.html" title="Слова">
+            <span class="nav-icon">🃏</span><span class="nav-label">Слова</span>
+            <span class="nav-badge" id="navBadgeWords">0/466</span>
+        </a>
+        <a class="nav-btn" href="phrases.html" title="Конструктор фраз">
+            <span class="nav-icon">🧱</span><span class="nav-label">Конструктор</span>
+        </a>
+        <div class="nav-section-label">Aliaj</div>
+        <a class="nav-btn" href="index.html#settings" title="Настройки">
+            <span class="nav-icon">⚙️</span><span class="nav-label">Настройки</span>
+        </a>
+    </nav>
+</aside>
+
+<main class="content" id="content">
+    <div class="gr-header">
+        <h2>📖 Грамматический справочник</h2>
+        <p>Полный свод правил эсперанто: от алфавита до стилистики. 24 статьи с примерами, таблицами и разбором. Используйте поиск или раскройте нужную тему.</p>
+    </div>
+
+    <div class="gr-toc">
+        <div class="gr-toc-title">Оглавление</div>
+        <div class="gr-toc-grid" id="grToc">
+            <a data-goto="ga-1"><span class="toc-icon">🔤</span>Алфавит и произношение</a>
+            <a data-goto="ga-2"><span class="toc-icon">📌</span>Артикль «la»</a>
+            <a data-goto="ga-3"><span class="toc-icon">📦</span>Существительные</a>
+            <a data-goto="ga-4"><span class="toc-icon">🎨</span>Прилагательные</a>
+            <a data-goto="ga-5"><span class="toc-icon">🎯</span>Винительный падеж</a>
+            <a data-goto="ga-6"><span class="toc-icon">👤</span>Личные местоимения</a>
+            <a data-goto="ga-7"><span class="toc-icon">🔄</span>Возвратные si/sin/sia</a>
+            <a data-goto="ga-8"><span class="toc-icon">🧩</span>Коррелятивы (45 слов)</a>
+            <a data-goto="ga-9"><span class="toc-icon">🔢</span>Числительные</a>
+            <a data-goto="ga-10"><span class="toc-icon">⏱️</span>Три времени глагола</a>
+            <a data-goto="ga-11"><span class="toc-icon">🌫️</span>Наклонения (-us, -u)</a>
+            <a data-goto="ga-12"><span class="toc-icon">🎬</span>Причастия (6 форм)</a>
+            <a data-goto="ga-13"><span class="toc-icon">🕰️</span>Сложные времена</a>
+            <a data-goto="ga-14"><span class="toc-icon">🔁</span>Страдательный залог</a>
+            <a data-goto="ga-15"><span class="toc-icon">📐</span>Предлоги</a>
+            <a data-goto="ga-16"><span class="toc-icon">🔗</span>Союзы</a>
+            <a data-goto="ga-17"><span class="toc-icon">🔝</span>Приставки</a>
+            <a data-goto="ga-18"><span class="toc-icon">🔻</span>Суффиксы</a>
+            <a data-goto="ga-19"><span class="toc-icon">🧱</span>Сложные слова</a>
+            <a data-goto="ga-20"><span class="toc-icon">🚫</span>Отрицание и neni-</a>
+            <a data-goto="ga-21"><span class="toc-icon">❓</span>Вопросы</a>
+            <a data-goto="ga-22"><span class="toc-icon">🎭</span>Порядок слов и стиль</a>
+            <a data-goto="ga-23"><span class="toc-icon">📜</span>16 правил Fundamento</a>
+            <a data-goto="ga-24"><span class="toc-icon">💡</span>Частые ошибки</a>
+        </div>
+    </div>
+
+    <div class="gr-search-bar">
+        <input type="text" class="grammar-search" id="grSearch" placeholder="🔍 Поиск по грамматике..." autocomplete="off" />
+        <button type="button" class="gr-search-clear" id="grClear" aria-label="Очистить">✕</button>
+    </div>
+
+    <div id="grArticles">
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 1. АЛФАВИТ И ПРОИЗНОШЕНИЕ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-1" data-tags="alfabeto prononco literoj алфавит произношение буквы">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🔤</span>
+                    <span>Алфавит и произношение <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>28 букв — всегда один и тот же звук</h4>
+                <p>В эсперанто <b>каждая буква читается всегда одинаково</b>, независимо от соседних букв. Нет «немых» букв, нет исключений — это главное удобство языка.</p>
+
+                <h4>Полный алфавит</h4>
+                <table>
+                    <tr><th>Буква</th><th>Звук (рус.)</th><th>Пример</th></tr>
+                    <tr><td>a</td><td>а</td><td><span class="eo">amiko</span> — друг</td></tr>
+                    <tr><td>b</td><td>б</td><td><span class="eo">bona</span> — хороший</td></tr>
+                    <tr><td>c</td><td>ц</td><td><span class="eo">cent</span> — сто</td></tr>
+                    <tr><td>ĉ</td><td>ч</td><td><span class="eo">ĉambro</span> — комната</td></tr>
+                    <tr><td>d</td><td>д</td><td><span class="eo">domo</span> — дом</td></tr>
+                    <tr><td>e</td><td>э</td><td><span class="eo">estas</span> — есть</td></tr>
+                    <tr><td>f</td><td>ф</td><td><span class="eo">floro</span> — цветок</td></tr>
+                    <tr><td>g</td><td>г (твёрдо)</td><td><span class="eo">granda</span> — большой</td></tr>
+                    <tr><td>ĝ</td><td>дж</td><td><span class="eo">ĝojo</span> — радость</td></tr>
+                    <tr><td>h</td><td>г (придыхательное)</td><td><span class="eo">homo</span> — человек</td></tr>
+                    <tr><td>ĥ</td><td>х</td><td><span class="eo">ĥoro</span> — хор</td></tr>
+                    <tr><td>i</td><td>и</td><td><span class="eo">iri</span> — идти</td></tr>
+                    <tr><td>j</td><td>й</td><td><span class="eo">juna</span> — молодой</td></tr>
+                    <tr><td>ĵ</td><td>ж</td><td><span class="eo">ĵurnalo</span> — газета</td></tr>
+                    <tr><td>k</td><td>к</td><td><span class="eo">kato</span> — кот</td></tr>
+                    <tr><td>l</td><td>ль (мягче рус. л)</td><td><span class="eo">libro</span> — книга</td></tr>
+                    <tr><td>m</td><td>м</td><td><span class="eo">mano</span> — рука</td></tr>
+                    <tr><td>n</td><td>н</td><td><span class="eo">nokto</span> — ночь</td></tr>
+                    <tr><td>o</td><td>о</td><td><span class="eo">okulo</span> — глаз</td></tr>
+                    <tr><td>p</td><td>п</td><td><span class="eo">patro</span> — отец</td></tr>
+                    <tr><td>r</td><td>р</td><td><span class="eo">rapida</span> — быстрый</td></tr>
+                    <tr><td>s</td><td>с</td><td><span class="eo">suno</span> — солнце</td></tr>
+                    <tr><td>ŝ</td><td>ш</td><td><span class="eo">ŝati</span> — ценить</td></tr>
+                    <tr><td>t</td><td>т</td><td><span class="eo">tablo</span> — стол</td></tr>
+                    <tr><td>u</td><td>у</td><td><span class="eo">unu</span> — один</td></tr>
+                    <tr><td>ŭ</td><td>ў (как в «паўза»)</td><td><span class="eo">aŭdi</span> — слышать</td></tr>
+                    <tr><td>v</td><td>в</td><td><span class="eo">vi</span> — ты</td></tr>
+                    <tr><td>z</td><td>з</td><td><span class="eo">zebro</span> — зебра</td></tr>
+                </table>
+
+                <h4>Шесть «шапочных» букв</h4>
+                <p>Особые буквы с диакритикой: <b>ĉ ĝ ĥ ĵ ŝ ŭ</b>. Это отдельные буквы, а не «c с крышкой» — они имеют своё место в алфавите.</p>
+
+                <h4>Три главных правила</h4>
+                <div class="rule-box">
+                    <b>1.</b> Ударение — <b>всегда на предпоследнем слоге</b>. Никогда не меняется.<br>
+                    <span class="eo">do-MO</span>, <span class="eo">ka-TI-no</span>, <span class="eo">ES-pe-RAN-to</span>, <span class="eo">te-le-FO-no</span>.
+                </div>
+                <div class="rule-box">
+                    <b>2.</b> Согласные перед <b>i</b> и <b>e</b> <b>не смягчаются</b>.<br>
+                    <span class="eo">teniso</span> = «тэ-ни-со» (твёрдо), а не «те-ни-сё».
+                </div>
+                <div class="rule-box">
+                    <b>3.</b> Каждая буква = один звук, всегда.<br>
+                    <span class="eo">kaj</span> = «кай», <span class="eo">ĉu</span> = «чу», <span class="eo">ĝi</span> = «джи».
+                </div>
+
+                <h4>x-система (если нет эсперанто-клавиатуры)</h4>
+                <p>Вместо «шапочных» букв можно писать обычную букву + <b>x</b>:</p>
+                <table>
+                    <tr><th>Вводите</th><th>Получаете</th></tr>
+                    <tr><td>cx</td><td>ĉ</td></tr>
+                    <tr><td>gx</td><td>ĝ</td></tr>
+                    <tr><td>hx</td><td>ĥ</td></tr>
+                    <tr><td>jx</td><td>ĵ</td></tr>
+                    <tr><td>sx</td><td>ŝ</td></tr>
+                    <tr><td>ux</td><td>ŭ</td></tr>
+                </table>
+                <p>Эту систему используют в чатах, письмах и SMS. Существует и h-система (<span class="eo">ch</span>, <span class="eo">gh</span>), но она может создать путаницу со словом <span class="eo">choro</span> — рекомендуется именно <b>x-система</b>.</p>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 2. АРТИКЛЬ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-2" data-tags="artikolo la определенный артикль">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">📌</span>
+                    <span>Артикль «la» <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Что такое la</h4>
+                <p>В эсперанто есть только <b>определённый артикль</b> — <span class="eo">la</span>. Неопределённого артикля <b>нет</b> — там, где по-русски «какой-то», «один», просто ставится существительное без артикля.</p>
+
+                <h4>la = «тот самый, о котором мы знаем»</h4>
+                <table>
+                    <tr><th>Без la (неизвестный, любой)</th><th>С la (конкретный)</th></tr>
+                    <tr><td><span class="eo">Mi vidas domon.</span> — Я вижу (какой-то) дом.</td><td><span class="eo">Mi vidas la domon.</span> — Я вижу (тот самый) дом.</td></tr>
+                    <tr><td><span class="eo">Ŝi aĉetis libron.</span> — Она купила (какую-то) книгу.</td><td><span class="eo">Ŝi aĉetis la libron.</span> — Она купила (ту самую) книгу.</td></tr>
+                </table>
+
+                <h4>la не изменяется никогда</h4>
+                <p>Ни по роду, ни по числу, ни по падежу:</p>
+                <div class="ex"><b>la</b> domo <span class="ru">— дом</span></div>
+                <div class="ex"><b>la</b> domoj <span class="ru">— дома</span></div>
+                <div class="ex"><b>la</b> domon <span class="ru">— дом (вин.)</span></div>
+                <div class="ex"><b>la</b> domojn <span class="ru">— дома (вин.)</span></div>
+
+                <h4>Когда la обязателен</h4>
+                <ul>
+                    <li>Если предмет уже упоминался: <span class="eo">Mi havas hundon. <b>La</b> hundo estas nigra.</span></li>
+                    <li>Перед <span class="eo">unu</span> в значении «единственный»: <span class="eo">Vi estas <b>la</b> unua.</span></li>
+                    <li>Перед превосходной степенью: <span class="eo">Ŝi estas <b>la</b> plej bela.</span></li>
+                    <li>С притяжательными: <span class="eo"><b>la</b> mia, <b>la</b> via.</span></li>
+                    <li>С именами, если речь о конкретной известной личности: <span class="eo"><b>la</b> Zamenhof.</span></li>
+                </ul>
+
+                <h4>Когда la обычно не ставится</h4>
+                <ul>
+                    <li>Перед именем собственным без уточнения: <span class="eo">Petro, Anna, Moskvo.</span></li>
+                    <li>В устойчивых выражениях: <span class="eo">hejmen, matene, nokte.</span></li>
+                    <li>Во множестве пословиц и поэзии.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 3. СУЩЕСТВИТЕЛЬНЫЕ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-3" data-tags="substantivoj существительные окончание o pluralo множественное число">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">📦</span>
+                    <span>Существительные <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Окончание -o — всегда</h4>
+                <p><b>Каждое</b> существительное в эсперанто заканчивается на <b>-o</b>. Без исключений. Это позволяет мгновенно отличить существительное от других частей речи.</p>
+                <div class="ex"><b>domo</b> — дом, <b>libro</b> — книга, <b>homo</b> — человек, <b>amiko</b> — друг, <b>lingvo</b> — язык, <b>urbo</b> — город.</div>
+
+                <h4>Множественное число: -j</h4>
+                <table>
+                    <tr><th>Один</th><th>Много</th></tr>
+                    <tr><td>domo <span class="ru">дом</span></td><td>domoj <span class="ru">дома</span></td></tr>
+                    <tr><td>libro <span class="ru">книга</span></td><td>libroj <span class="ru">книги</span></td></tr>
+                    <tr><td>amiko <span class="ru">друг</span></td><td>amikoj <span class="ru">друзья</span></td></tr>
+                </table>
+
+                <h4>Винительный падеж: -n</h4>
+                <p>Кто? Что? — прямое дополнение получает <b>-n</b>:</p>
+                <table>
+                    <tr><th>Им. падеж</th><th>Вин. падеж</th></tr>
+                    <tr><td>la domo <span class="ru">дом</span></td><td>la domon <span class="ru">дом (кого/что)</span></td></tr>
+                    <tr><td>la domoj <span class="ru">дома</span></td><td>la domojn <span class="ru">дома (вин.)</span></td></tr>
+                </table>
+
+                <h4>Сводная таблица окончаний</h4>
+                <table>
+                    <tr><th>Падеж</th><th>Один</th><th>Много</th></tr>
+                    <tr><td>Именительный</td><td>-o</td><td>-oj</td></tr>
+                    <tr><td>Винительный</td><td>-on</td><td>-ojn</td></tr>
+                </table>
+
+                <div class="rule-box">
+                    <b>Пример целиком:</b><br>
+                    <span class="eo">La bona amiko → La bonaj amikoj → La bonan amikon → La bonajn amikojn.</span><br>
+                    <span class="ru">хороший друг → хорошие друзья → хорошего друга (вин.) → хороших друзей (вин.)</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 4. ПРИЛАГАТЕЛЬНЫЕ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-4" data-tags="adjektivoj прилагательные окончание a komparacio степени">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🎨</span>
+                    <span>Прилагательные <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Окончание -a</h4>
+                <p>Все прилагательные заканчиваются на <b>-a</b>: <span class="eo">bona</span>, <span class="eo">bela</span>, <span class="eo">granda</span>, <span class="eo">juna</span>, <span class="eo">nova</span>, <span class="eo">verda</span>.</p>
+
+                <h4>Согласование — обязательно</h4>
+                <p>Прилагательное всегда «повторяет» окончание существительного — по числу и падежу. Это <b>не опция</b>, а обязательное правило.</p>
+                <table>
+                    <tr><th>Существительное</th><th>Прилагательное</th><th>Перевод</th></tr>
+                    <tr><td>bona amik<b>o</b></td><td>bon<b>a</b></td><td>хороший друг</td></tr>
+                    <tr><td>bon<b>aj</b> amik<b>oj</b></td><td>bon<b>aj</b></td><td>хорошие друзья</td></tr>
+                    <tr><td>bon<b>an</b> amik<b>on</b></td><td>bon<b>an</b></td><td>хорошего друга (вин.)</td></tr>
+                    <tr><td>bon<b>ajn</b> amik<b>ojn</b></td><td>bon<b>ajn</b></td><td>хороших друзей (вин.)</td></tr>
+                </table>
+
+                <h4>Степени сравнения</h4>
+                <table>
+                    <tr><th>Степень</th><th>Форма</th><th>Пример</th></tr>
+                    <tr><td>Обычная</td><td>bela</td><td><span class="eo">bela domo</span></td></tr>
+                    <tr><td>Сравнительная</td><td>pli bela <b>ol</b></td><td><span class="eo">pli bela ol tiu</span> — красивее того</td></tr>
+                    <tr><td>Превосходная</td><td>la plej bela <b>el</b></td><td><span class="eo">la plej bela el ĉiuj</span> — самый красивый из всех</td></tr>
+                    <tr><td>Снижение</td><td>malpli bela <b>ol</b></td><td><span class="eo">malpli bela ol tiu</span> — менее красивый</td></tr>
+                    <tr><td>Наименьшая</td><td>la malplej bela</td><td><span class="eo">la malplej bela</span> — наименее красивый</td></tr>
+                </table>
+
+                <h4>Очень полезно: mal-</h4>
+                <p>Приставка <b>mal-</b> даёт противоположное значение — не нужно учить антонимы:</p>
+                <div class="ex">
+                    <b>bona</b> → <b>malbona</b> <span class="ru">хороший → плохой</span><br>
+                    <b>granda</b> → <b>malgranda</b> <span class="ru">большой → маленький</span><br>
+                    <b>juna</b> → <b>maljuna</b> <span class="ru">молодой → старый</span><br>
+                    <b>nova</b> → <b>malnova</b> <span class="ru">новый → старый</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 5. ВИНИТЕЛЬНЫЙ ПАДЕЖ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-5" data-tags="akuzativo винительный падеж n direkto направление">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🎯</span>
+                    <span>Винительный падеж (-n) <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Три функции окончания -n</h4>
+                <p>Окончание <b>-n</b> в эсперанто имеет <b>три</b> применения — и все три важны.</p>
+
+                <h4>1. Прямое дополнение (кого? что?)</h4>
+                <table>
+                    <tr><th>Подлежащее</th><th>Сказуемое</th><th>Дополнение</th></tr>
+                    <tr><td>Mi</td><td>vidas</td><td><b>la patr<b>on</b></b></td></tr>
+                    <tr><td>Ŝi</td><td>amas</td><td><b>la patrin<b>on</b></b></td></tr>
+                    <tr><td>Ni</td><td>legas</td><td><b>la libro<b>n</b></b></td></tr>
+                </table>
+                <div class="ex"><b>La knabo</b> amas <b>la knabinon</b>. — Мальчик любит девочку.</div>
+                <div class="ex"><b>La knabinon</b> amas <b>la knabo</b>. — Девочку любит мальчик. <span class="ru">(Смысл тот же — благодаря -n)</span></div>
+
+                <h4>2. Направление движения</h4>
+                <p>После предлога, если обозначается <b>куда</b> (движение), а не <b>где</b> (место) — добавляем -n:</p>
+                <table>
+                    <tr><th>Где? (без -n)</th><th>Куда? (с -n)</th></tr>
+                    <tr><td><span class="eo">en la domo</span> — в доме</td><td><span class="eo">en la domo<b>n</b></span> — в дом</td></tr>
+                    <tr><td><span class="eo">sur la tablo</span> — на столе</td><td><span class="eo">sur la tablo<b>n</b></span> — на стол</td></tr>
+                    <tr><td><span class="eo">sub la lito</span> — под кроватью</td><td><span class="eo">sub la lito<b>n</b></span> — под кровать</td></tr>
+                    <tr><td><span class="eo">inter la amikoj</span> — между друзьями</td><td><span class="eo">inter la amikoj<b>n</b></span> — между друзей</td></tr>
+                </table>
+
+                <h4>3. Обстоятельства времени и меры</h4>
+                <div class="ex"><span class="eo">Mi atendis <b>tri horojn</b>.</span> — Я ждал три часа.</div>
+                <div class="ex"><span class="eo">Ĝi kostas <b>kvin eŭrojn</b>.</span> — Это стоит пять евро.</div>
+                <div class="ex"><span class="eo">Li pezas <b>okdek kilogramojn</b>.</span> — Он весит 80 кг.</div>
+
+                <div class="rule-box">
+                    <b>Простой тест:</b> если по-русски можно подставить «кого? что?» — ставьте <b>-n</b>. Если «где?» — не ставьте. Если «куда?» — ставьте после предлога.
+                </div>
+
+                <h4>Когда -n не нужен</h4>
+                <ul>
+                    <li>После <b>esti</b> и подобных связок: <span class="eo">Mi estas studento</span> (не <span class="eo">studenton</span>).</li>
+                    <li>Если предлог уже показывает отношение: <span class="eo">al la domo</span>, <span class="eo">de la patro</span>, <span class="eo">kun amiko</span>.</li>
+                    <li>С безличными глаголами: <span class="eo">Pluvas.</span>, <span class="eo">Neĝas.</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 6. ЛИЧНЫЕ МЕСТОИМЕНИЯ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-6" data-tags="pronomoj местоимения personaj личные posesivaj притяжательные">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">👤</span>
+                    <span>Личные и притяжательные местоимения <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Личные местоимения</h4>
+                <table>
+                    <tr><th>Esperanto</th><th>Русский</th><th>Примечание</th></tr>
+                    <tr><td>mi</td><td>я</td><td>—</td></tr>
+                    <tr><td>vi</td><td>ты / вы</td><td>одно слово для обоих</td></tr>
+                    <tr><td>li</td><td>он</td><td>мужчина, мальчик</td></tr>
+                    <tr><td>ŝi</td><td>она</td><td>женщина, девочка</td></tr>
+                    <tr><td>ĝi</td><td>оно</td><td>предмет, животное, явление</td></tr>
+                    <tr><td>ni</td><td>мы</td><td>—</td></tr>
+                    <tr><td>ili</td><td>они</td><td>все — независимо от пола</td></tr>
+                    <tr><td>oni</td><td>(безличное)</td><td>«говорят», «делают» — без конкретного лица</td></tr>
+                    <tr><td>si</td><td>себя</td><td>только для 3-го лица (см. статью ниже)</td></tr>
+                </table>
+
+                <h4>Притяжательные: + -a</h4>
+                <p>Притяжательные образуются добавлением окончания <b>-a</b> к личным:</p>
+                <table>
+                    <tr><th>Личное</th><th>Притяжательное</th><th>Перевод</th></tr>
+                    <tr><td>mi</td><td>mia</td><td>мой</td></tr>
+                    <tr><td>vi</td><td>via</td><td>твой / ваш</td></tr>
+                    <tr><td>li</td><td>lia</td><td>его</td></tr>
+                    <tr><td>ŝi</td><td>ŝia</td><td>её</td></tr>
+                    <tr><td>ĝi</td><td>ĝia</td><td>его / её (для предметов)</td></tr>
+                    <tr><td>ni</td><td>nia</td><td>наш</td></tr>
+                    <tr><td>ili</td><td>ilia</td><td>их</td></tr>
+                    <tr><td>oni</td><td>onia</td><td>общий</td></tr>
+                </table>
+                <p>Притяжательные <b>согласуются</b> с существительным: <span class="eo">mia domo</span>, <span class="eo">miaj domoj</span>, <span class="eo">mian domon</span>, <span class="eo">miajn domojn</span>.</p>
+
+                <h4>Важно: ĝi vs li/ŝi</h4>
+                <p>Для <b>людей</b> используем <b>li</b> (мужчина) или <b>ŝi</b> (женщина). Для <b>всего остального</b> — <b>ĝi</b>: <span class="eo">La tablo — ĝi estas granda. La hundo — ĝi kuras.</span></p>
+                <p>В разговорной речи иногда говорят <b>li</b> о животном, если его пол известен (особенно о домашних любимцах). Но по умолчанию — <b>ĝi</b>.</p>
+
+                <h4>Безличное oni</h4>
+                <p><b>Oni</b> заменяет целое неопределённое «люди», «все»:</p>
+                <div class="ex"><span class="eo"><b>Oni</b> diras, ke Esperanto estas facila.</span> — Говорят, что эсперанто лёгкий.</div>
+                <div class="ex"><span class="eo"><b>Oni</b> konstruas la domon.</span> — (Люди) строят дом.</div>
+                <p>Глагол после <b>oni</b> стоит в 3-м лице ед. ч. — как обычно.</p>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 7. ВОЗВРАТНЫЕ si/sin/sia -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-7" data-tags="si sin sia возвратные refleksivaj">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🔄</span>
+                    <span>Возвратные si / sin / sia <span class="gr-level-chip a2">A2</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Что это и с кем используется</h4>
+                <p>Возвратное местоимение <b>si / sin / sia</b> означает «себя / свой». Используется <b>только с 3-м лицом</b>: с <span class="eo">li, ŝi, ĝi, ili, oni</span>. Никогда с <span class="eo">mi, vi, ni</span>.</p>
+
+                <h4>Три формы</h4>
+                <table>
+                    <tr><th>Форма</th><th>Функция</th><th>Пример</th></tr>
+                    <tr><td>si</td><td>им., после предлога</td><td><span class="eo">Li diris al <b>si</b>.</span> — Он сказал себе.</td></tr>
+                    <tr><td>sin</td><td>винительный</td><td><span class="eo">Li lavas <b>sin</b>.</span> — Он моется.</td></tr>
+                    <tr><td>sia</td><td>притяжательное</td><td><span class="eo">Li amas <b>sian</b> patrinon.</span> — Он любит свою мать.</td></tr>
+                </table>
+
+                <h4>Ключевое различие: sia vs lia</h4>
+                <div class="ex"><span class="eo">Li amas <b>sian</b> patrinon.</span> — Он любит <b>свою</b> (его собственную) мать.</div>
+                <div class="ex"><span class="eo">Li amas <b>lian</b> patrinon.</span> — Он любит <b>его</b> (мать другого человека) мать.</div>
+                <p>Сравните:</p>
+                <div class="ex"><span class="eo">Anna vidis <b>sian</b> fraton.</span> — Анна видела <b>своего</b> брата.</div>
+                <div class="ex"><span class="eo">Anna vidis <b>ŝian</b> fraton.</span> — Анна видела <b>её</b> брата (брата другой женщины).</div>
+
+                <h4>Когда возвратное заменяется обычным</h4>
+                <table>
+                    <tr><th>Лицо</th><th>Возвратное</th><th>Пример</th></tr>
+                    <tr><td>mi</td><td>min, mia</td><td><span class="eo">Mi lavas <b>min</b>.</span></td></tr>
+                    <tr><td>vi</td><td>vin, via</td><td><span class="eo">Vi lavas <b>vin</b>.</span></td></tr>
+                    <tr><td>ni</td><td>nin, nia</td><td><span class="eo">Ni lavas <b>nin</b>.</span></td></tr>
+                    <tr><td>li/ŝi/ili/oni</td><td>sin, sia</td><td><span class="eo">Li lavas <b>sin</b>.</span></td></tr>
+                </table>
+
+                <div class="rule-box">
+                    <b>Проверка:</b> если «себя» относится к <b>самому подлежащему</b> и подлежащее — 3-е лицо, используйте <b>si/sin/sia</b>. Если «себя» относится к <b>другому человеку</b>, используйте <b>lin/ŝin/lian/ŝian</b>.
+                </div>
+
+                <h4>Классические примеры</h4>
+                <div class="ex"><span class="eo">Ŝi kombas <b>sian</b> hararon.</span> — Она причёсывает свои волосы.</div>
+                <div class="ex"><span class="eo">Li fermis la pordon post <b>si</b>.</span> — Он закрыл за собой дверь.</div>
+                <div class="ex"><span class="eo">Ili amas <b>siajn</b> gepatrojn.</span> — Они любят своих родителей.</div>
+                <div class="ex"><span class="eo">Ŝi prenis <b>sian</b> libron.</span> — Она взяла свою книгу.</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 8. КОРРЕЛЯТИВЫ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-8" data-tags="korelativoj коррелятивы таблица 45 ki ti i ĉi neni">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🧩</span>
+                    <span>Коррелятивы — таблица 45 слов <span class="gr-level-chip a2">A2</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Что это такое</h4>
+                <p><b>Коррелятивы</b> — это 45 слов, которые образуются по формуле: <b>5 приставок × 9 суффиксов</b>. Один раз выучив таблицу, вы получаете ключ к половине эсперанто.</p>
+
+                <h4>5 приставок</h4>
+                <table>
+                    <tr><th>Приставка</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>ki-</td><td>вопрос</td><td><span class="eo">kiu?</span> — кто?</td></tr>
+                    <tr><td>ti-</td><td>указание</td><td><span class="eo">tiu</span> — тот</td></tr>
+                    <tr><td>i-</td><td>неопределённость</td><td><span class="eo">iu</span> — кто-то</td></tr>
+                    <tr><td>ĉi-</td><td>всеобщность</td><td><span class="eo">ĉiu</span> — каждый</td></tr>
+                    <tr><td>neni-</td><td>отрицание</td><td><span class="eo">neniu</span> — никто</td></tr>
+                </table>
+
+                <h4>9 суффиксов</h4>
+                <table>
+                    <tr><th>Суффикс</th><th>Значение</th><th>Пример (ki-)</th></tr>
+                    <tr><td>-u</td><td>лицо, предмет</td><td><span class="eo">kiu</span> — кто</td></tr>
+                    <tr><td>-o</td><td>вещь, явление</td><td><span class="eo">kio</span> — что</td></tr>
+                    <tr><td>-a</td><td>качество</td><td><span class="eo">kia</span> — какой</td></tr>
+                    <tr><td>-e</td><td>место</td><td><span class="eo">kie</span> — где</td></tr>
+                    <tr><td>-am</td><td>время</td><td><span class="eo">kiam</span> — когда</td></tr>
+                    <tr><td>-al</td><td>причина</td><td><span class="eo">kial</span> — почему</td></tr>
+                    <tr><td>-el</td><td>образ действия</td><td><span class="eo">kiel</span> — как</td></tr>
+                    <tr><td>-om</td><td>количество</td><td><span class="eo">kiom</span> — сколько</td></tr>
+                    <tr><td>-es</td><td>принадлежность</td><td><span class="eo">kies</span> — чей</td></tr>
+                </table>
+
+                <h4>Полная таблица 45 слов</h4>
+                <table>
+                    <tr><th>—</th><th>ki-</th><th>ti-</th><th>i-</th><th>ĉi-</th><th>neni-</th></tr>
+                    <tr>
+                        <td><b>-u</b></td>
+                        <td>kiu <span class="ru">кто</span></td>
+                        <td>tiu <span class="ru">тот</span></td>
+                        <td>iu <span class="ru">кто-то</span></td>
+                        <td>ĉiu <span class="ru">каждый</span></td>
+                        <td>neniu <span class="ru">никто</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-o</b></td>
+                        <td>kio <span class="ru">что</span></td>
+                        <td>tio <span class="ru">то</span></td>
+                        <td>io <span class="ru">что-то</span></td>
+                        <td>ĉio <span class="ru">всё</span></td>
+                        <td>nenio <span class="ru">ничто</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-a</b></td>
+                        <td>kia <span class="ru">какой</span></td>
+                        <td>tia <span class="ru">такой</span></td>
+                        <td>ia <span class="ru">какой-то</span></td>
+                        <td>ĉia <span class="ru">всякий</span></td>
+                        <td>nenia <span class="ru">никакой</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-e</b></td>
+                        <td>kie <span class="ru">где</span></td>
+                        <td>tie <span class="ru">там</span></td>
+                        <td>ie <span class="ru">где-то</span></td>
+                        <td>ĉie <span class="ru">везде</span></td>
+                        <td>nenie <span class="ru">нигде</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-am</b></td>
+                        <td>kiam <span class="ru">когда</span></td>
+                        <td>tiam <span class="ru">тогда</span></td>
+                        <td>iam <span class="ru">когда-то</span></td>
+                        <td>ĉiam <span class="ru">всегда</span></td>
+                        <td>neniam <span class="ru">никогда</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-al</b></td>
+                        <td>kial <span class="ru">почему</span></td>
+                        <td>tial <span class="ru">поэтому</span></td>
+                        <td>ial <span class="ru">почему-то</span></td>
+                        <td>ĉial <span class="ru">по всяким причинам</span></td>
+                        <td>nenial <span class="ru">нипочему</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-el</b></td>
+                        <td>kiel <span class="ru">как</span></td>
+                        <td>tiel <span class="ru">так</span></td>
+                        <td>iel <span class="ru">как-то</span></td>
+                        <td>ĉiel <span class="ru">всяко</span></td>
+                        <td>neniel <span class="ru">никак</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-om</b></td>
+                        <td>kiom <span class="ru">сколько</span></td>
+                        <td>tiom <span class="ru">столько</span></td>
+                        <td>iom <span class="ru">немного</span></td>
+                        <td>ĉiom <span class="ru">всё кол-во</span></td>
+                        <td>neniom <span class="ru">нисколько</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>-es</b></td>
+                        <td>kies <span class="ru">чей</span></td>
+                        <td>ties <span class="ru">того</span></td>
+                        <td>ies <span class="ru">чей-то</span></td>
+                        <td>ĉies <span class="ru">всех</span></td>
+                        <td>nenies <span class="ru">ничей</span></td>
+                    </tr>
+                </table>
+
+                <h4>Пара ki- → ti-</h4>
+                <p>Вопрос на <b>ki-</b> почти всегда получает ответ на <b>ti-</b>:</p>
+                <div class="ex"><b>Kie</b> vi estas? — <b>Tie</b>. <span class="ru">Где ты? — Там.</span></div>
+                <div class="ex"><b>Kiam</b> li venos? — <b>Tiam</b>. <span class="ru">Когда он придёт? — Тогда.</span></div>
+                <div class="ex"><b>Kial</b> vi ploras? — <b>Tial</b>. <span class="ru">Почему ты плачешь? — Поэтому.</span></div>
+
+                <h4>kiom da = «сколько» (с существительным)</h4>
+                <div class="ex"><b>Kiom da</b> pomoj vi havas? — Сколько у тебя яблок?</div>
+                <div class="ex"><b>Kiom</b> vi aĝas? — Сколько тебе лет? <span class="ru">(без сущ. — просто kiom)</span></div>
+
+                <div class="rule-box">
+                    <b>Совет:</b> выучите <b>структуру</b>, а не 45 слов. Тогда любое незнакомое сочетание вы поймёте по смыслу приставки + суффикса.
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 9. ЧИСЛИТЕЛЬНЫЕ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-9" data-tags="nombroj числительные числа ordaj количественные">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🔢</span>
+                    <span>Числительные <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Основные числа (1–10)</h4>
+                <table>
+                    <tr><th>Число</th><th>Esperanto</th><th>Число</th><th>Esperanto</th></tr>
+                    <tr><td>1</td><td>unu</td><td>6</td><td>ses</td></tr>
+                    <tr><td>2</td><td>du</td><td>7</td><td>sep</td></tr>
+                    <tr><td>3</td><td>tri</td><td>8</td><td>ok</td></tr>
+                    <tr><td>4</td><td>kvar</td><td>9</td><td>naŭ</td></tr>
+                    <tr><td>5</td><td>kvin</td><td>10</td><td>dek</td></tr>
+                </table>
+                <p>Также: <b>cent</b> — 100, <b>mil</b> — 1000, <b>miliono</b> — миллион.</p>
+
+                <h4>Десятки и составные</h4>
+                <table>
+                    <tr><th>Число</th><th>Esperanto</th><th>Как образуется</th></tr>
+                    <tr><td>20</td><td>dudek</td><td>du + dek</td></tr>
+                    <tr><td>25</td><td>dudek kvin</td><td>dudek + kvin</td></tr>
+                    <tr><td>42</td><td>kvardek du</td><td>kvardek + du</td></tr>
+                    <tr><td>77</td><td>sepdek sep</td><td>sepdek + sep</td></tr>
+                    <tr><td>100</td><td>cent</td><td>—</td></tr>
+                    <tr><td>365</td><td>tricent sesdek kvin</td><td>tri + cent + sesdek + kvin</td></tr>
+                    <tr><td>1000</td><td>mil</td><td>—</td></tr>
+                </table>
+
+                <div class="rule-box">
+                    <b>Правило:</b> числа пишутся <b>слитно</b> в одном слове при умножении (du<b>dek</b>, tri<b>cent</b>), и <b>через пробел</b> при сложении (dudek <b>kvin</b>, cent <b>dudek tri</b>).
+                </div>
+
+                <h4>Производные формы</h4>
+                <table>
+                    <tr><th>Тип</th><th>Суффикс</th><th>Пример</th><th>Перевод</th></tr>
+                    <tr><td>Порядковые</td><td>-a</td><td>unua</td><td>первый</td></tr>
+                    <tr><td>Кратные</td><td>-obl-</td><td>duobla</td><td>двойной</td></tr>
+                    <tr><td>Дроби</td><td>-on-</td><td>duono</td><td>половина</td></tr>
+                    <tr><td>Собирательные</td><td>-op-</td><td>duope</td><td>по двое</td></tr>
+                    <tr><td>Существительные</td><td>-o</td><td>duo</td><td>двойка, пара</td></tr>
+                </table>
+
+                <h4>Порядковые числительные</h4>
+                <div class="ex"><span class="eo">La unua leciono</span> — Первый урок</div>
+                <div class="ex"><span class="eo">La dua de majo</span> — Второе мая</div>
+                <div class="ex"><span class="eo">La tria fojo</span> — Третий раз</div>
+
+                <h4>Время и даты</h4>
+                <div class="ex"><span class="eo">Estas la tria horo.</span> — Три часа.</div>
+                <div class="ex"><span class="eo">Estas la tria kaj duono.</span> — Половина четвёртого (3:30).</div>
+                <div class="ex"><span class="eo">Hodiaŭ estas la kvina de junio.</span> — Сегодня пятое июня.</div>
+
+                <h4>Дроби</h4>
+                <div class="ex"><b>duono</b> — половина, <b>triono</b> — треть, <b>kvarono</b> — четверть</div>
+                <div class="ex"><b>du trionoj</b> — две трети, <b>tri kvaronoj</b> — три четверти</div>
+                <div class="ex"><b>du komo kvin</b> — 2,5</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 10. ТРИ ВРЕМЕНИ ГЛАГОЛА -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-10" data-tags="verboj глаголы tempo времена as is os инфинитив i">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">⏱️</span>
+                    <span>Три времени глагола <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Главное правило эсперанто</h4>
+                <p>Глаголы <b>не спрягаются по лицам и числам</b>. Одна форма для всех подлежащих. Достаточно запомнить <b>три окончания</b>:</p>
+
+                <table>
+                    <tr><th>Время</th><th>Окончание</th><th>Пример</th><th>Перевод</th></tr>
+                    <tr><td>Инфинитив</td><td><b>-i</b></td><td>legi</td><td>читать</td></tr>
+                    <tr><td>Настоящее</td><td><b>-as</b></td><td>legas</td><td>читаю/читает/читаем...</td></tr>
+                    <tr><td>Прошедшее</td><td><b>-is</b></td><td>legis</td><td>читал/читала/читали...</td></tr>
+                    <tr><td>Будущее</td><td><b>-os</b></td><td>legos</td><td>буду читать/будет читать...</td></tr>
+                </table>
+
+                <h4>Одна форма для всех лиц</h4>
+                <table>
+                    <tr><th>Подлежащее</th><th>Настоящее</th><th>Прошедшее</th><th>Будущее</th></tr>
+                    <tr><td>mi</td><td>legas</td><td>legis</td><td>legos</td></tr>
+                    <tr><td>vi</td><td>legas</td><td>legis</td><td>legos</td></tr>
+                    <tr><td>li / ŝi / ĝi</td><td>legas</td><td>legis</td><td>legos</td></tr>
+                    <tr><td>ni</td><td>legas</td><td>legis</td><td>legos</td></tr>
+                    <tr><td>ili</td><td>legas</td><td>legis</td><td>legos</td></tr>
+                </table>
+                <p><b>Estas</b> — единственная «универсальная» связка «есть» для всех лиц.</p>
+
+                <h4>Примеры в контексте</h4>
+                <div class="ex"><span class="eo">Mi <b>lernas</b> Esperanton.</span> — Я учу эсперанто.</div>
+                <div class="ex"><span class="eo">Ŝi <b>parolis</b> kun li.</span> — Она говорила с ним.</div>
+                <div class="ex"><span class="eo">Ni <b>vizitos</b> vin morgaŭ.</span> — Мы навестим вас завтра.</div>
+                <div class="ex"><span class="eo">Ili <b>estas</b> amikoj.</span> — Они друзья.</div>
+
+                <h4>Отрицание: ne перед глаголом</h4>
+                <div class="ex"><span class="eo">Mi <b>ne</b> komprenas.</span> — Я не понимаю.</div>
+                <div class="ex"><span class="eo">Ŝi <b>ne</b> venis.</span> — Она не пришла.</div>
+
+                <h4>Вопрос с ĉu</h4>
+                <div class="ex"><span class="eo"><b>Ĉu</b> vi parolas Esperanton?</span> — Ты говоришь на эсперанто?</div>
+                <div class="ex"><span class="eo"><b>Ĉu</b> li venos?</span> — Он придёт?</div>
+
+                <div class="rule-box">
+                    <b>Запомните:</b> в эсперанто всего <b>3 времени</b> (настоящее, прошедшее, будущее) + 3 наклонения. Просто и логично.
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 11. НАКЛОНЕНИЯ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-11" data-tags="us u kondiĉa imperativo условное повелительное наклонение">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🌫️</span>
+                    <span>Наклонения: условное (-us) и повелительное (-u) <span class="gr-level-chip a2">A2</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Условное наклонение: -us</h4>
+                <p>Выражает <b>нереальное, желаемое, гипотетическое</b> действие. По-русски — «если бы…, то…», «я бы…».</p>
+                <table>
+                    <tr><th>Esperanto</th><th>Русский</th></tr>
+                    <tr><td>mi farus</td><td>я сделал бы</td></tr>
+                    <tr><td>vi farus</td><td>ты сделал бы</td></tr>
+                    <tr><td>li farus</td><td>он сделал бы</td></tr>
+                    <tr><td>ni farus</td><td>мы сделали бы</td></tr>
+                </table>
+
+                <h4>Конструкция «se … -us»</h4>
+                <div class="rule-box">
+                    В <b>нереальном</b> условии <b>обе части</b> идут в <b>-us</b>:
+                </div>
+                <div class="ex"><b>Se</b> mi <b>havus</b> tempon, mi <b>legus</b>. — Если бы у меня было время, я читал бы.</div>
+                <div class="ex"><b>Se</b> li <b>venus</b>, ni <b>ĝojus</b>. — Если бы он пришёл, мы бы обрадовались.</div>
+                <div class="ex"><b>Se</b> mi <b>estus</b> riĉa, mi <b>vojaĝus</b>. — Если бы я был богат, я путешествовал бы.</div>
+
+                <h4>Вежливые просьбы через -us</h4>
+                <div class="ex"><span class="eo">Ĉu vi <b>povus</b> helpi min?</span> — Не могли бы вы помочь мне?</div>
+                <div class="ex"><span class="eo">Mi <b>ŝatus</b> kafon.</span> — Я хотел бы кофе.</div>
+                <div class="ex"><span class="eo">Ĉu vi <b>volus</b> veni?</span> — Хотели бы вы прийти?</div>
+
+                <h4>Повелительное наклонение: -u</h4>
+                <p>Приказ, просьба, совет, пожелание:</p>
+                <table>
+                    <tr><th>Инфинитив</th><th>Повелительное</th><th>Перевод</th></tr>
+                    <tr><td>iri</td><td>iru</td><td>иди</td></tr>
+                    <tr><td>veni</td><td>venu</td><td>приди</td></tr>
+                    <tr><td>diri</td><td>diru</td><td>скажи</td></tr>
+                    <tr><td>legi</td><td>legu</td><td>читай</td></tr>
+                    <tr><td>atendi</td><td>atendu</td><td>жди</td></tr>
+                </table>
+
+                <h4>Запрет: ne + -u</h4>
+                <div class="ex"><span class="eo"><b>Ne</b> kuru!</span> — Не беги!</div>
+                <div class="ex"><span class="eo"><b>Ne</b> forgesu!</span> — Не забудь!</div>
+                <div class="ex"><span class="eo"><b>Ne</b> parolu!</span> — Не говори!</div>
+
+                <h4>Ni + -u = «давай сделаем»</h4>
+                <div class="ex"><span class="eo"><b>Ni iru!</b></span> — Пойдём!</div>
+                <div class="ex"><span class="eo"><b>Ni manĝu!</b></span> — Давай поедим!</div>
+                <div class="ex"><span class="eo"><b>Ni kantu!</b></span> — Давай споём!</div>
+
+                <h4>Вежливая форма: bonvolu + инфинитив</h4>
+                <div class="ex"><span class="eo"><b>Bonvolu</b> sidiĝi.</span> — Пожалуйста, садитесь.</div>
+                <div class="ex"><span class="eo"><b>Bonvolu</b> ripeti.</span> — Пожалуйста, повторите.</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 12. ПРИЧАСТИЯ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-12" data-tags="participoj причастия anta inta onta ata ita ota">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🎬</span>
+                    <span>Причастия — 6 форм <span class="gr-level-chip b1">B1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Что такое причастие</h4>
+                <p>Причастие — глагольная форма, которая описывает действие как признак. В русском: «читающий», «читавший», «читаемый», «прочитанный». В эсперанто — <b>6 форм</b>.</p>
+
+                <h4>Схема: 3 времени × 2 залога</h4>
+                <table>
+                    <tr><th>Время</th><th>Актив (делающий)</th><th>Пассив (с кем делают)</th></tr>
+                    <tr><td>Настоящее</td><td><b>-anta</b></td><td><b>-ata</b></td></tr>
+                    <tr><td>Прошедшее</td><td><b>-inta</b></td><td><b>-ita</b></td></tr>
+                    <tr><td>Будущее</td><td><b>-onta</b></td><td><b>-ota</b></td></tr>
+                </table>
+                <p>Мнемоника: <b>a/i/o</b> — как времена <b>-as/-is/-os</b>. Первая колонка — актив, вторая — пассив.</p>
+
+                <h4>Активные причастия</h4>
+                <table>
+                    <tr><th>Форма</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>-anta</td><td>тот, кто делает сейчас</td><td><span class="eo">leganta knabo</span> — читающий мальчик</td></tr>
+                    <tr><td>-inta</td><td>тот, кто делал раньше</td><td><span class="eo">leginta knabo</span> — мальчик, который читал</td></tr>
+                    <tr><td>-onta</td><td>тот, кто будет делать</td><td><span class="eo">legonta knabo</span> — мальчик, который будет читать</td></tr>
+                </table>
+
+                <h4>Пассивные причастия</h4>
+                <table>
+                    <tr><th>Форма</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>-ata</td><td>то, что делают сейчас</td><td><span class="eo">legata libro</span> — читаемая книга</td></tr>
+                    <tr><td>-ita</td><td>то, что уже сделано</td><td><span class="eo">legita libro</span> — прочитанная книга</td></tr>
+                    <tr><td>-ota</td><td>то, что предстоит</td><td><span class="eo">legota libro</span> — книга к прочтению</td></tr>
+                </table>
+
+                <h4>Согласование как у прилагательных</h4>
+                <p>Причастие ведёт себя как прилагательное — согласуется в числе и падеже:</p>
+                <div class="ex"><span class="eo">leganta knabo</span> → <span class="eo">legantaj knaboj</span> → <span class="eo">legantan knabon</span> → <span class="eo">legantajn knabojn</span></div>
+
+                <h4>Причастие + -o = существительное</h4>
+                <div class="ex"><span class="eo">leganto</span> — читающий (человек)</div>
+                <div class="ex"><span class="eo">leginto</span> — тот, кто читал</div>
+                <div class="ex"><span class="eo">legonto</span> — тот, кто будет читать</div>
+                <div class="ex"><span class="eo">esperantisto</span> — эсперантист (от esperi, но принцип тот же)</div>
+
+                <h4>Причастие + -e = деепричастие</h4>
+                <table>
+                    <tr><th>Форма</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>-ante</td><td>делая одновременно</td><td><span class="eo">Kantante, ŝi laboris.</span> — Напевая, она работала.</td></tr>
+                    <tr><td>-inte</td><td>сделав раньше</td><td><span class="eo">Manĝinte, li foriris.</span> — Поев, он ушёл.</td></tr>
+                    <tr><td>-onte</td><td>собираясь сделать</td><td><span class="eo">Forironte, li adiaŭis.</span> — Собираясь уходить, он попрощался.</td></tr>
+                </table>
+
+                <h4>Сокращение придаточных</h4>
+                <table>
+                    <tr><th>Полное</th><th>Сокращённое</th></tr>
+                    <tr><td>La homo, <b>kiu legas</b>, sidas.</td><td>La <b>leganta</b> homo sidas.</td></tr>
+                    <tr><td>La homo, <b>kiu legis</b>, foriris.</td><td>La <b>leginta</b> homo foriris.</td></tr>
+                    <tr><td>La homo, <b>kiu legos</b>, venos.</td><td>La <b>legonta</b> homo venos.</td></tr>
+                    <tr><td>La libro, <b>kiun oni legas</b>, bonas.</td><td>La <b>legata</b> libro bonas.</td></tr>
+                </table>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 13. СЛОЖНЫЕ ВРЕМЕНА -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-13" data-tags="kompleksaj tempoj сложные времена estas leganta">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🕰️</span>
+                    <span>Сложные времена <span class="gr-level-chip b1">B1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Что это</h4>
+                <p>Кроме простых <b>-as/-is/-os</b>, в эсперанто есть «составные» времена: <b>esti + активное причастие</b>. Они уточняют <b>оттенок действия</b>: длительность, результат, предстояние.</p>
+
+                <h4>Таблица сложных времён</h4>
+                <table>
+                    <tr><th>Esperanto</th><th>Смысл</th><th>Перевод</th></tr>
+                    <tr><td>mi <b>estas</b> leganta</td><td>прямо сейчас, в процессе</td><td>я сейчас читаю</td></tr>
+                    <tr><td>mi <b>estis</b> leganta</td><td>тогда, в процессе</td><td>я тогда читал</td></tr>
+                    <tr><td>mi <b>estos</b> leganta</td><td>в будущем, в процессе</td><td>я буду читать</td></tr>
+                    <tr><td>mi <b>estas</b> leginta</td><td>уже прочитал (результат)</td><td>я уже прочитал</td></tr>
+                    <tr><td>mi <b>estis</b> leginta</td><td>к моменту уже прочитал</td><td>я уже прочитал (когда)</td></tr>
+                    <tr><td>mi <b>estos</b> leginta</td><td>к будущему моменту</td><td>я к тому времени прочитаю</td></tr>
+                </table>
+
+                <h4>Оттенки на примерах</h4>
+                <div class="ex"><b>Mi legis libron.</b> — Я читал книгу. <span class="ru">(просто факт)</span></div>
+                <div class="ex"><b>Mi estis leganta libron.</b> — Я (в тот момент) читал книгу. <span class="ru">(длительность)</span></div>
+                <div class="ex"><b>Mi legis la libron.</b> — Я прочитал книгу. <span class="ru">(завершённость)</span></div>
+                <div class="ex"><b>Mi estis leginta la libron.</b> — Я (уже) прочитал книгу к тому моменту. <span class="ru">(результат раньше)</span></div>
+
+                <h4>Классические конструкции</h4>
+                <div class="ex"><span class="eo">Kiam li venis, mi estis leganta libron.</span> — Когда он пришёл, я читал книгу.</div>
+                <div class="ex"><span class="eo">Kiam vi alvenos, ni estos finintaj la laboron.</span> — Когда ты придёшь, мы уже закончим работу.</div>
+                <div class="ex"><span class="eo">Ŝi estas preparanta vespermanĝon.</span> — Она готовит ужин (прямо сейчас).</div>
+                <div class="ex"><span class="eo">La infanoj estis ludantaj en la ĝardeno.</span> — Дети играли в саду (в тот момент).</div>
+                <div class="ex"><span class="eo">Kiam mi telefonis, ŝi estis elirinta.</span> — Когда я позвонил, она уже ушла.</div>
+
+                <div class="rule-box">
+                    <b>Практический совет:</b> простые времена <b>-as/-is/-os</b> покрывают <b>90%</b> случаев. Сложные — для точных оттенков в литературе, поэзии и переводах.
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 14. ПАССИВ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-14" data-tags="pasivo страдательный залог esti de per">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🔁</span>
+                    <span>Страдательный залог <span class="gr-level-chip b1">B1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Актив vs пассив</h4>
+                <div class="ex"><b>Актив:</b> Пётр читает книгу. <span class="ru">(субъект действует)</span></div>
+                <div class="ex"><b>Пассив:</b> Книга читается Петром. <span class="ru">(с субъектом действуют)</span></div>
+
+                <h4>Формула пассива</h4>
+                <div class="rule-box" style="text-align:center; font-size:15px;">
+                    <b>esti</b> (в нужном времени) + <b>пассивное причастие</b> + <b>de</b> + <b>исполнитель</b>
+                </div>
+
+                <h4>Все времена пассива</h4>
+                <table>
+                    <tr><th>Esperanto</th><th>Русский</th></tr>
+                    <tr><td>La libro <b>estas</b> legata.</td><td>Книгу читают.</td></tr>
+                    <tr><td>La libro <b>estis</b> legata.</td><td>Книгу читали.</td></tr>
+                    <tr><td>La libro <b>estos</b> legata.</td><td>Книгу будут читать.</td></tr>
+                    <tr><td>La libro <b>estas</b> legita.</td><td>Книга прочитана.</td></tr>
+                    <tr><td>La libro <b>estis</b> legita.</td><td>Книга была прочитана.</td></tr>
+                    <tr><td>La libro <b>estos</b> legita.</td><td>Книга будет прочитана.</td></tr>
+                </table>
+
+                <h4>de — исполнитель, per — инструмент</h4>
+                <div class="ex"><span class="eo">La libro estis skribita <b>de</b> Tolstoj.</span> — Книга была написана Толстым.</div>
+                <div class="ex"><span class="eo">La letero estis skribita <b>per</b> krajono.</span> — Письмо было написано карандашом.</div>
+                <div class="ex"><span class="eo">La domo estos konstruita <b>de</b> ni.</span> — Дом будет построен нами.</div>
+
+                <h4>Примеры в контексте</h4>
+                <div class="ex"><span class="eo">Tiu domo estis konstruita antaŭ cent jaroj.</span> — Этот дом был построен сто лет назад.</div>
+                <div class="ex"><span class="eo">Esperanto estas parolata en multaj landoj.</span> — На эсперанто говорят во многих странах.</div>
+                <div class="ex"><span class="eo">La manĝaĵo estas preparata de mia patrino.</span> — Еда готовится моей матерью.</div>
+
+                <h4>Разговорный эквивалент — oni</h4>
+                <p>В разговорной речи пассив часто заменяют активом с <b>oni</b>:</p>
+                <table>
+                    <tr><th>Пассив (книжный)</th><th>Актив с oni (разговорный)</th></tr>
+                    <tr><td>La letero estis skribita.</td><td>Oni skribis la leteron.</td></tr>
+                    <tr><td>La domo estas konstruata.</td><td>Oni konstruas la domon.</td></tr>
+                </table>
+
+                <div class="rule-box">
+                    <b>Когда пассив полезен:</b> в научном, официальном и публицистическом стиле — когда исполнитель неважен или неизвестен. В художественной литературе и быту чаще предпочитают актив.
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 15. ПРЕДЛОГИ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-15" data-tags="prepozicioj предлоги en sur sub al de kun je">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">📐</span>
+                    <span>Предлоги <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Главное правило</h4>
+                <div class="rule-box">
+                    После предлога всегда идёт <b>именительный падеж</b> (без -n) — <b>кроме</b> случаев, когда обозначается <b>направление движения</b>.
+                </div>
+
+                <h4>Основные предлоги места</h4>
+                <table>
+                    <tr><th>Предлог</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>en</td><td>в (внутри)</td><td><span class="eo">en la domo</span> — в доме</td></tr>
+                    <tr><td>sur</td><td>на (поверхности)</td><td><span class="eo">sur la tablo</span> — на столе</td></tr>
+                    <tr><td>sub</td><td>под</td><td><span class="eo">sub la tablo</span> — под столом</td></tr>
+                    <tr><td>super</td><td>над</td><td><span class="eo">super la domo</span> — над домом</td></tr>
+                    <tr><td>apud</td><td>рядом с</td><td><span class="eo">apud la domo</span> — рядом с домом</td></tr>
+                    <tr><td>ĉe</td><td>у, при</td><td><span class="eo">ĉe la tablo</span> — у стола</td></tr>
+                    <tr><td>inter</td><td>между</td><td><span class="eo">inter amikoj</span> — между друзьями</td></tr>
+                    <tr><td>antaŭ</td><td>перед</td><td><span class="eo">antaŭ la domo</span> — перед домом</td></tr>
+                    <tr><td>post</td><td>за, после</td><td><span class="eo">post la domo</span> — за домом</td></tr>
+                    <tr><td>trans</td><td>по ту сторону</td><td><span class="eo">trans la rivero</span> — за рекой</td></tr>
+                    <tr><td>preter</td><td>мимо</td><td><span class="eo">preter la domo</span> — мимо дома</td></tr>
+                    <tr><td>ekster</td><td>вне</td><td><span class="eo">ekster la urbo</span> — за городом</td></tr>
+                </table>
+
+                <h4>Предлоги движения и отношения</h4>
+                <table>
+                    <tr><th>Предлог</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>al</td><td>к, в сторону</td><td><span class="eo">al la amiko</span> — к другу</td></tr>
+                    <tr><td>de</td><td>от, кем</td><td><span class="eo">de la amiko</span> — от друга</td></tr>
+                    <tr><td>el</td><td>из (внутри)</td><td><span class="eo">el la domo</span> — из дома</td></tr>
+                    <tr><td>ĝis</td><td>до</td><td><span class="eo">ĝis la urbo</span> — до города</td></tr>
+                    <tr><td>tra</td><td>через, сквозь</td><td><span class="eo">tra la parko</span> — через парк</td></tr>
+                    <tr><td>kun</td><td>с (вместе)</td><td><span class="eo">kun vi</span> — с тобой</td></tr>
+                    <tr><td>sen</td><td>без</td><td><span class="eo">sen vi</span> — без тебя</td></tr>
+                    <tr><td>por</td><td>для</td><td><span class="eo">por vi</span> — для тебя</td></tr>
+                    <tr><td>pri</td><td>о, про</td><td><span class="eo">pri la libro</span> — о книге</td></tr>
+                    <tr><td>pro</td><td>из-за</td><td><span class="eo">pro la pluvo</span> — из-за дождя</td></tr>
+                    <tr><td>per</td><td>посредством</td><td><span class="eo">per krajono</span> — карандашом</td></tr>
+                    <tr><td>kontraŭ</td><td>против</td><td><span class="eo">kontraŭ la muro</span> — против стены</td></tr>
+                    <tr><td>malgraŭ</td><td>несмотря на</td><td><span class="eo">malgraŭ la pluvo</span> — несмотря на дождь</td></tr>
+                    <tr><td>dum</td><td>в течение</td><td><span class="eo">dum la tago</span> — в течение дня</td></tr>
+                    <tr><td>po</td><td>по (распределение)</td><td><span class="eo">po du pomoj</span> — по два яблока</td></tr>
+                    <tr><td>anstataŭ</td><td>вместо</td><td><span class="eo">anstataŭ vi</span> — вместо тебя</td></tr>
+                    <tr><td>krom</td><td>кроме</td><td><span class="eo">krom vi</span> — кроме тебя</td></tr>
+                </table>
+
+                <h4>Направление с -n</h4>
+                <table>
+                    <tr><th>Где? (без -n)</th><th>Куда? (с -n)</th></tr>
+                    <tr><td>en la domo</td><td>en la domo<b>n</b></td></tr>
+                    <tr><td>sur la tablo</td><td>sur la tablo<b>n</b></td></tr>
+                    <tr><td>sub la lito</td><td>sub la lito<b>n</b></td></tr>
+                    <tr><td>inter la amikoj</td><td>inter la amikoj<b>n</b></td></tr>
+                </table>
+
+                <h4>Универсальный предлог je</h4>
+                <p>Когда не подходит ни один другой предлог, используется <b>je</b>:</p>
+                <div class="ex"><span class="eo">Li malsanas <b>je</b> la kapo.</span> — У него болит голова.</div>
+                <div class="ex"><span class="eo">Mi kredas <b>je</b> vi.</span> — Я верю в тебя.</div>
+                <div class="ex"><span class="eo">Ĝi okazis <b>je</b> la tria horo.</span> — Это случилось в три часа.</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 16. СОЮЗЫ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-16" data-tags="konjunkcioj союзы ke ĉar se kvankam">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🔗</span>
+                    <span>Союзы и сложное предложение <span class="gr-level-chip a2">A2</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Сочинительные союзы</h4>
+                <table>
+                    <tr><th>Союз</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>kaj</td><td>и</td><td><span class="eo">Vi kaj mi</span> — ты и я</td></tr>
+                    <tr><td>aŭ</td><td>или</td><td><span class="eo">teo aŭ kafo</span> — чай или кофе</td></tr>
+                    <tr><td>sed</td><td>но</td><td><span class="eo">juna sed saĝa</span> — молодой, но мудрый</td></tr>
+                    <tr><td>nek … nek</td><td>ни … ни</td><td><span class="eo">nek li nek ŝi</span> — ни он, ни она</td></tr>
+                    <tr><td>do</td><td>итак, же</td><td><span class="eo">Do, ni iru.</span> — Итак, пойдём.</td></tr>
+                    <tr><td>ĉu … ĉu</td><td>или … или</td><td><span class="eo">Ĉu hodiaŭ, ĉu morgaŭ?</span></td></tr>
+                </table>
+
+                <h4>Подчинительные союзы</h4>
+                <table>
+                    <tr><th>Союз</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>ke</td><td>что</td><td><span class="eo">Mi pensas, ke vi pravas.</span></td></tr>
+                    <tr><td>ĉu</td><td>ли</td><td><span class="eo">Ŝi demandis, ĉu mi venos.</span></td></tr>
+                    <tr><td>ĉar</td><td>потому что</td><td><span class="eo">Mi restas, ĉar pluvas.</span></td></tr>
+                    <tr><td>se</td><td>если</td><td><span class="eo">Se vi volas, venu.</span></td></tr>
+                    <tr><td>kvankam</td><td>хотя</td><td><span class="eo">Kvankam li lacas, li laboras.</span></td></tr>
+                    <tr><td>por ke</td><td>чтобы (+ -u)</td><td><span class="eo">Mi parolas laŭte, por ke ĉiuj aŭdu.</span></td></tr>
+                    <tr><td>kvazaŭ</td><td>как будто</td><td><span class="eo">Li parolas, kvazaŭ li scias ĉion.</span></td></tr>
+                    <tr><td>tial ke</td><td>так как</td><td><span class="eo">Tial ke pluvas, ni restas.</span></td></tr>
+                    <tr><td>pro tio ke</td><td>из-за того что</td><td><span class="eo">Ni prokrastis pro tio ke...</span></td></tr>
+                </table>
+
+                <h4>Временные союзы</h4>
+                <table>
+                    <tr><th>Союз</th><th>Значение</th></tr>
+                    <tr><td>kiam</td><td>когда</td></tr>
+                    <tr><td>dum</td><td>пока, в то время как</td></tr>
+                    <tr><td>ĝis</td><td>до тех пор, пока не</td></tr>
+                    <tr><td>post kiam</td><td>после того как</td></tr>
+                    <tr><td>antaŭ ol</td><td>прежде чем</td></tr>
+                    <tr><td>tuj kiam</td><td>как только</td></tr>
+                    <tr><td>de kiam</td><td>с тех пор как</td></tr>
+                </table>
+
+                <h4>Ключевые правила</h4>
+                <div class="rule-box">
+                    <b>por ke + -u:</b> после этого союза глагол <b>обязательно</b> в повелительном наклонении. <span class="eo">Mi venis, por ke vi vidu min.</span>
+                </div>
+                <div class="rule-box">
+                    <b>ke без сдвига времён:</b> в эсперанто время глагола в придаточном <b>не сдвигается</b>. <span class="eo">Li diris, ke li venos</span> — Он сказал, что придёт.
+                </div>
+
+                <h4>Примеры в контексте</h4>
+                <div class="ex"><span class="eo">Mi pensas, <b>ke</b> Esperanto estas facila.</span> — Я думаю, что эсперанто лёгкий.</div>
+                <div class="ex"><span class="eo">Ŝi ne venis, <b>ĉar</b> ŝi estis malsana.</span> — Она не пришла, потому что была больна.</div>
+                <div class="ex"><span class="eo"><b>Kvankam</b> pluvas, ni promenos.</span> — Хотя идёт дождь, мы пойдём гулять.</div>
+                <div class="ex"><span class="eo"><b>Se</b> vi volas, ni iru kune.</span> — Если хочешь, пойдём вместе.</div>
+                <div class="ex"><span class="eo">Mi atendas, <b>ĝis</b> vi finos.</span> — Я жду, пока ты не закончишь.</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 17. ПРИСТАВКИ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-17" data-tags="prefiksoj приставки mal re ge ek dis bo pra mis fi">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🔝</span>
+                    <span>Приставки (prefiksoj) <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Зачем нужны приставки</h4>
+                <p>В эсперанто <b>нет отдельных слов для противоположностей и оттенков</b> — их образуют приставки. Одна приставка — десятки новых слов.</p>
+
+                <h4>Основные приставки</h4>
+                <table>
+                    <tr><th>Приставка</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td><b>mal-</b></td><td>противоположное</td><td>bona → <b>malbona</b> (плохой)</td></tr>
+                    <tr><td><b>re-</b></td><td>снова, обратно</td><td>fari → <b>refari</b> (переделать)</td></tr>
+                    <tr><td><b>ge-</b></td><td>оба пола вместе</td><td>patro → <b>gepatroj</b> (родители)</td></tr>
+                    <tr><td><b>ek-</b></td><td>начало действия</td><td>kanti → <b>ekkanti</b> (запеть)</td></tr>
+                    <tr><td><b>dis-</b></td><td>врозь, рас-</td><td>doni → <b>disdoni</b> (раздать)</td></tr>
+                    <tr><td><b>bo-</b></td><td>родство через брак</td><td>patro → <b>bopatro</b> (свёкор)</td></tr>
+                    <tr><td><b>pra-</b></td><td>древность, пра-</td><td>avo → <b>praavo</b> (прадед)</td></tr>
+                    <tr><td><b>mis-</b></td><td>ошибочно</td><td>kompreni → <b>miskompreni</b></td></tr>
+                    <tr><td><b>fi-</b></td><td>презрение</td><td>homo → <b>fihomo</b> (подлец)</td></tr>
+                </table>
+
+                <h4>mal- — самая важная</h4>
+                <p>Даёт <b>противоположное значение</b>. Экономит сотни слов:</p>
+                <div class="ex"><b>bona</b> → <b>malbona</b> <span class="ru">хороший → плохой</span></div>
+                <div class="ex"><b>granda</b> → <b>malgranda</b> <span class="ru">большой → маленький</span></div>
+                <div class="ex"><b>varma</b> → <b>malvarma</b> <span class="ru">тёплый → холодный</span></div>
+                <div class="ex"><b>juna</b> → <b>maljuna</b> <span class="ru">молодой → старый</span></div>
+                <div class="ex"><b>amiko</b> → <b>malamiko</b> <span class="ru">друг → враг</span></div>
+                <div class="ex"><b>fermi</b> → <b>malfermi</b> <span class="ru">закрыть → открыть</span></div>
+
+                <h4>ek- — начало действия</h4>
+                <div class="ex"><b>kanti</b> → <b>ekkanti</b> <span class="ru">петь → запеть</span></div>
+                <div class="ex"><b>plori</b> → <b>ekplori</b> <span class="ru">плакать → заплакать</span></div>
+                <div class="ex"><b>ridi</b> → <b>ekridi</b> <span class="ru">смеяться → рассмеяться</span></div>
+                <div class="ex"><b>dormi</b> → <b>ekdormi</b> <span class="ru">спать → заснуть</span></div>
+
+                <h4>re- — снова или назад</h4>
+                <div class="ex"><b>legi</b> → <b>relegi</b> <span class="ru">читать → перечитать</span></div>
+                <div class="ex"><b>veni</b> → <b>reveni</b> <span class="ru">приходить → вернуться</span></div>
+                <div class="ex"><b>doni</b> → <b>redoni</b> <span class="ru">дать → вернуть</span></div>
+
+                <h4>ge- — объединяет оба пола</h4>
+                <div class="ex"><b>patro</b> + <b>patrino</b> → <b>gepatroj</b> <span class="ru">отец + мать → родители</span></div>
+                <div class="ex"><b>frato</b> + <b>fratino</b> → <b>gefratoj</b> <span class="ru">братья и сёстры</span></div>
+                <div class="ex"><b>edzo</b> + <b>edzino</b> → <b>geedzoj</b> <span class="ru">супруги</span></div>
+                <div class="ex"><b>avo</b> + <b>avino</b> → <b>geavoj</b> <span class="ru">дедушка и бабушка</span></div>
+
+                <h4>dis- — врозь</h4>
+                <div class="ex"><b>doni</b> → <b>disdoni</b> <span class="ru">дать → раздать</span></div>
+                <div class="ex"><b>iri</b> → <b>disiri</b> <span class="ru">идти → разойтись</span></div>
+                <div class="ex"><b>semi</b> → <b>dissemi</b> <span class="ru">сеять → рассеять</span></div>
+
+                <h4>bo-, pra-, mis-, fi- — уточняющие</h4>
+                <div class="ex"><b>bo-</b>: <span class="eo">bopatro</span> (свёкор), <span class="eo">bopatrino</span> (свекровь), <span class="eo">bofrato</span> (деверь, шурин)</div>
+                <div class="ex"><b>pra-</b>: <span class="eo">praavo</span> (прадед), <span class="eo">pranepo</span> (правнук), <span class="eo">prapatro</span> (предок)</div>
+                <div class="ex"><b>mis-</b>: <span class="eo">miskompreni</span> (неправильно понять), <span class="eo">misaŭdi</span> (ослышаться)</div>
+                <div class="ex"><b>fi-</b>: <span class="eo">fihomo</span> (подлец), <span class="eo">fivorto</span> (ругательство)</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 18. СУФФИКСЫ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-18" data-tags="sufiksoj суффиксы in id eg et ar ej ist ul aĵ ig iĝ ebl il">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🔻</span>
+                    <span>Суффиксы (sufiksoj) <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Зачем нужны суффиксы</h4>
+                <p>Суффиксы превращают один корень в десятки слов. Освоив их, вы <b>автоматически понимаете</b> незнакомые слова.</p>
+
+                <h4>Базовые суффиксы</h4>
+                <table>
+                    <tr><th>Суффикс</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td><b>-in-</b></td><td>женский пол</td><td>patro → <b>patrino</b> (мать)</td></tr>
+                    <tr><td><b>-id-</b></td><td>детёныш</td><td>kato → <b>katido</b> (котёнок)</td></tr>
+                    <tr><td><b>-eg-</b></td><td>увеличение</td><td>domo → <b>domego</b> (домище)</td></tr>
+                    <tr><td><b>-et-</b></td><td>уменьшение</td><td>domo → <b>dometo</b> (домик)</td></tr>
+                    <tr><td><b>-ar-</b></td><td>собрание, группа</td><td>arbo → <b>arbaro</b> (лес)</td></tr>
+                    <tr><td><b>-ej-</b></td><td>место</td><td>lerni → <b>lernejo</b> (школа)</td></tr>
+                    <tr><td><b>-ist-</b></td><td>профессия, занятие</td><td>kanti → <b>kantisto</b> (певец)</td></tr>
+                    <tr><td><b>-ul-</b></td><td>человек с качеством</td><td>juna → <b>junulo</b> (юноша)</td></tr>
+                    <tr><td><b>-aĵ-</b></td><td>вещь, продукт</td><td>manĝi → <b>manĝaĵo</b> (еда)</td></tr>
+                </table>
+
+                <h4>Продуктивные суффиксы (продолжение)</h4>
+                <table>
+                    <tr><th>Суффикс</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td><b>-ig-</b></td><td>заставить, сделать</td><td>pura → <b>purigi</b> (чистить)</td></tr>
+                    <tr><td><b>-iĝ-</b></td><td>стать, становиться</td><td>pura → <b>puriĝi</b> (очищаться)</td></tr>
+                    <tr><td><b>-ebl-</b></td><td>возможный</td><td>vidi → <b>videbla</b> (видимый)</td></tr>
+                    <tr><td><b>-ind-</b></td><td>достойный</td><td>legi → <b>leginda</b> (достойный прочтения)</td></tr>
+                    <tr><td><b>-end-</b></td><td>который должен быть</td><td>fari → <b>farenda</b> (обязательный)</td></tr>
+                    <tr><td><b>-em-</b></td><td>склонный к</td><td>labori → <b>laborema</b> (трудолюбивый)</td></tr>
+                    <tr><td><b>-ec-</b></td><td>качество</td><td>bela → <b>beleco</b> (красота)</td></tr>
+                    <tr><td><b>-il-</b></td><td>инструмент</td><td>skribi → <b>skribilo</b> (ручка)</td></tr>
+                    <tr><td><b>-ad-</b></td><td>длительное действие</td><td>paroli → <b>paroladi</b></td></tr>
+                    <tr><td><b>-an-</b></td><td>житель, член</td><td>klubo → <b>klubano</b></td></tr>
+                    <tr><td><b>-ism-</b></td><td>учение, система</td><td>sociala → <b>socialismo</b></td></tr>
+                    <tr><td><b>-uj-</b></td><td>вместилище</td><td>pomo → <b>pomujo</b> (яблоня)</td></tr>
+                </table>
+
+                <h4>Числовые суффиксы</h4>
+                <table>
+                    <tr><th>Суффикс</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td><b>-obl-</b></td><td>кратность</td><td>du → <b>duobla</b> (двойной)</td></tr>
+                    <tr><td><b>-on-</b></td><td>доля</td><td>du → <b>duono</b> (половина)</td></tr>
+                    <tr><td><b>-op-</b></td><td>группами</td><td>du → <b>duope</b> (по двое)</td></tr>
+                </table>
+
+                <h4>Пара -ig- и -iĝ-</h4>
+                <p><b>-ig-</b> = «заставить что-то делать»; <b>-iĝ-</b> = «стать чем-то сам».</p>
+                <table>
+                    <tr><th>Исходное</th><th>-ig-</th><th>-iĝ-</th></tr>
+                    <tr><td>pura (чистый)</td><td>purigi (чистить)</td><td>puriĝi (очищаться)</td></tr>
+                    <tr><td>ruĝa (красный)</td><td>ruĝigi (красить)</td><td>ruĝiĝi (краснеть)</td></tr>
+                    <tr><td>granda</td><td>grandigi (увеличивать)</td><td>grandiĝi (увеличиваться)</td></tr>
+                    <tr><td>scii (знать)</td><td>sciigi (сообщать)</td><td>sciiĝi (узнавать)</td></tr>
+                </table>
+
+                <h4>Каскады суффиксов</h4>
+                <div class="ex"><b>instruistino</b> = instru- + -ist- + -in- + -o <span class="ru">учительница</span></div>
+                <div class="ex"><b>junularo</b> = jun- + -ul- + -ar- + -o <span class="ru">молодёжь</span></div>
+                <div class="ex"><b>purigilo</b> = pur- + -ig- + -il- + -o <span class="ru">средство для чистки</span></div>
+                <div class="ex"><b>laborejego</b> = labor- + -ej- + -eg- + -o <span class="ru">огромное место работы</span></div>
+                <div class="ex"><b>belulino</b> = bel- + -ul- + -in- + -o <span class="ru">красавица</span></div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 19. СЛОЖНЫЕ СЛОВА -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-19" data-tags="kunmetitaj сложные слова словосложение compound">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🧱</span>
+                    <span>Сложные слова (kunmetitaj vortoj) <span class="gr-level-chip a2">A2</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Принцип словосложения</h4>
+                <p>В эсперанто можно <b>соединять корни</b> для получения новых слов. Главный смысловой корень — <b>последний</b>.</p>
+
+                <h4>Базовые сложные слова</h4>
+                <table>
+                    <tr><th>Слово</th><th>Разбор</th><th>Перевод</th></tr>
+                    <tr><td>ĉefurbo</td><td>ĉef- (главный) + urbo</td><td>столица</td></tr>
+                    <tr><td>labortablo</td><td>labor- + tablo</td><td>рабочий стол</td></tr>
+                    <tr><td>manĝoĉambro</td><td>manĝ- + ĉambro</td><td>столовая</td></tr>
+                    <tr><td>fervojo</td><td>fer- (железо) + vojo</td><td>железная дорога</td></tr>
+                    <tr><td>terpomo</td><td>ter- (земля) + pomo</td><td>картофель</td></tr>
+                    <tr><td>noktomezo</td><td>nokt- + mez- + -o</td><td>полночь</td></tr>
+                    <tr><td>tagmezo</td><td>tag- + mez- + -o</td><td>полдень</td></tr>
+                    <tr><td>skribotablo</td><td>skrib- + tablo</td><td>письменный стол</td></tr>
+                    <tr><td>lernolibro</td><td>lern- + libro</td><td>учебник</td></tr>
+                    <tr><td>librovendejo</td><td>libr- + vend- + -ej- + -o</td><td>книжный магазин</td></tr>
+                </table>
+
+                <h4>Как понять незнакомое слово</h4>
+                <ol>
+                    <li>Прочитайте <b>с конца</b> — там главный корень.</li>
+                    <li>Определите <b>уточняющий</b> корень или приставку.</li>
+                    <li>Соберите смысл: «что-то связанное с X, но именно Y».</li>
+                </ol>
+
+                <h4>С -o между корнями</h4>
+                <p>Иногда между корнями появляется <b>-o-</b> как соединительная гласная (особенно в словах с <span class="eo">manĝo-</span>, <span class="eo">lerno-</span>, <span class="eo">skribo-</span>):</p>
+                <div class="ex"><b>manĝoĉambro</b> — столовая</div>
+                <div class="ex"><b>skribotablo</b> — письменный стол</div>
+                <div class="ex"><b>lernolibro</b> — учебник</div>
+                <div class="ex"><b>laborotablo</b> — рабочий стол</div>
+                <div class="ex"><b>kantobirdo</b> — певчая птица</div>
+
+                <h4>Современные слова-конструкторы</h4>
+                <div class="ex"><b>komputilo</b> = komput- + -il- + -o <span class="ru">компьютер</span></div>
+                <div class="ex"><b>retpaĝo</b> = ret- (сеть) + paĝo <span class="ru">веб-страница</span></div>
+                <div class="ex"><b>interreto</b> = inter- + ret- + -o <span class="ru">интернет</span></div>
+                <div class="ex"><b>poŝtelefono</b> = poŝ- + telefon- + -o <span class="ru">мобильный телефон</span></div>
+                <div class="ex"><b>retmesaĝo</b> = ret- + mesaĝ- + -o <span class="ru">электронное письмо</span></div>
+
+                <div class="rule-box">
+                    <b>Пример:</b> <span class="eo">librovendejo</span> — разбираем: librovendejo → <b>libr</b> (книга) + <b>vend</b> (продавать) + <b>-ej-</b> (место) + <b>-o</b> = «место, где продают книги» = книжный магазин.
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 20. ОТРИЦАНИЕ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-20" data-tags="negado отрицание ne neni двойное">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🚫</span>
+                    <span>Отрицание и слова на neni- <span class="gr-level-chip a2">A2</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Базовое отрицание: ne</h4>
+                <p>Отрицание <b>ne</b> ставится <b>перед глаголом</b>:</p>
+                <div class="ex"><span class="eo">Mi <b>ne</b> komprenas.</span> — Я не понимаю.</div>
+                <div class="ex"><span class="eo">Ŝi <b>ne</b> venis.</span> — Она не пришла.</div>
+                <div class="ex"><span class="eo">Ni <b>ne</b> iros morgaŭ.</span> — Мы не пойдём завтра.</div>
+
+                <h4>Слова на neni- (отрицательные местоимения)</h4>
+                <table>
+                    <tr><th>Слово</th><th>Перевод</th></tr>
+                    <tr><td>neniu</td><td>никто</td></tr>
+                    <tr><td>nenio</td><td>ничто</td></tr>
+                    <tr><td>nenia</td><td>никакой</td></tr>
+                    <tr><td>nenie</td><td>нигде</td></tr>
+                    <tr><td>neniam</td><td>никогда</td></tr>
+                    <tr><td>nenial</td><td>нипочему</td></tr>
+                    <tr><td>neniel</td><td>никак</td></tr>
+                    <tr><td>neniom</td><td>нисколько</td></tr>
+                    <tr><td>nenies</td><td>ничей</td></tr>
+                </table>
+
+                <h4>Двойное отрицание — усиливает</h4>
+                <div class="rule-box">
+                    В отличие от английского, в эсперанто <b>двойное отрицание усиливает</b>, а не отменяет. Обычно используется <b>одна</b> стратегия: либо <b>ne</b>, либо <b>neni-</b>.
+                </div>
+
+                <h4>Три способа сказать «никто не пришёл»</h4>
+                <table>
+                    <tr><th>Способ</th><th>Пример</th><th>Оттенок</th></tr>
+                    <tr><td>Только neni-</td><td><span class="eo">Neniu venis.</span></td><td>нейтрально</td></tr>
+                    <tr><td>Только ne + i-</td><td><span class="eo">Ne venis iu.</span></td><td>эмфаза</td></tr>
+                    <tr><td>ne + neni-</td><td><span class="eo">Neniu ne venis.</span></td><td>«никто не не-пришёл» = все пришли</td></tr>
+                </table>
+                <p>По умолчанию выберите <b>одну</b> стратегию — этого достаточно.</p>
+
+                <h4>Двойное ne → «не не»</h4>
+                <div class="ex"><span class="eo">Ĉu vi <b>ne</b> volas? — <b>Ne</b>, mi ne volas.</span> — Ты не хочешь? — Нет, не хочу.</div>
+
+                <h4>Правильные примеры</h4>
+                <div class="ex"><span class="eo">Mi <b>neniam</b> estis tie.</span> — Я никогда там не был.</div>
+                <div class="ex"><span class="eo">Ŝi diras <b>nenion</b>.</span> — Она ничего не говорит.</div>
+                <div class="ex"><span class="eo">Li helpis al <b>neniu</b>.</span> — Он не помог никому.</div>
+                <div class="ex"><span class="eo">Ni parolis <b>pri nenio</b> grava.</span> — Мы говорили ни о чём важном.</div>
+
+                <h4>Когда оправданы две отрицательные части</h4>
+                <p>Когда <b>ne</b> относится не к факту, а к другому слову:</p>
+                <div class="ex"><b>Ne</b> ĉiu venis. — Не все пришли (но кто-то пришёл).</div>
+                <div class="ex"><b>Ne</b> ĉiam li pravas. — Не всегда он прав.</div>
+                <div class="ex">Mi venis <b>ne</b> por ludi. — Я пришёл не для игры.</div>
+
+                <h4>Предлог + neni-</h4>
+                <div class="ex"><b>kun neniu</b> — ни с кем</div>
+                <div class="ex"><b>pri nenio</b> — ни о чём</div>
+                <div class="ex"><b>al neniu</b> — никому</div>
+                <div class="ex"><b>de neniu</b> — ни от кого</div>
+                <div class="ex"><b>per nenio</b> — ничем</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 21. ВОПРОСЫ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-21" data-tags="demandoj вопросы ĉu ki-kiu kio специальные">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">❓</span>
+                    <span>Вопросы — ĉu и слова на ki- <span class="gr-level-chip a1">A1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Два типа вопросов</h4>
+                <table>
+                    <tr><th>Тип</th><th>Способ</th><th>Пример</th></tr>
+                    <tr><td>Общий (да/нет)</td><td>начинаем с <b>ĉu</b></td><td><span class="eo">Ĉu vi parolas Esperanton?</span></td></tr>
+                    <tr><td>Специальный</td><td>начинаем с <b>ki-</b></td><td><span class="eo">Kie vi loĝas?</span></td></tr>
+                </table>
+
+                <h4>Общий вопрос с ĉu</h4>
+                <div class="ex"><b>Ĉu</b> vi estas studento? — Ты студент?</div>
+                <div class="ex"><b>Ĉu</b> ŝi parolas la anglan? — Она говорит по-английски?</div>
+                <div class="ex"><b>Ĉu</b> pluvas? — Идёт дождь?</div>
+                <p>Ответ: <b>jes</b> (да) или <b>ne</b> (нет).</p>
+
+                <h4>Специальные вопросы — слова на ki-</h4>
+                <table>
+                    <tr><th>Слово</th><th>Значение</th><th>Пример</th></tr>
+                    <tr><td>kiu</td><td>кто, который</td><td><span class="eo">Kiu vi estas?</span> — Кто ты?</td></tr>
+                    <tr><td>kio</td><td>что</td><td><span class="eo">Kio estas tio?</span> — Что это?</td></tr>
+                    <tr><td>kia</td><td>какой</td><td><span class="eo">Kia estas la vetero?</span> — Какая погода?</td></tr>
+                    <tr><td>kie</td><td>где</td><td><span class="eo">Kie vi loĝas?</span> — Где ты живёшь?</td></tr>
+                    <tr><td>kiam</td><td>когда</td><td><span class="eo">Kiam vi venos?</span> — Когда ты придёшь?</td></tr>
+                    <tr><td>kial</td><td>почему</td><td><span class="eo">Kial vi lernas Esperanton?</span></td></tr>
+                    <tr><td>kiel</td><td>как</td><td><span class="eo">Kiel vi fartas?</span> — Как дела?</td></tr>
+                    <tr><td>kiom</td><td>сколько</td><td><span class="eo">Kiom da libroj vi havas?</span></td></tr>
+                    <tr><td>kies</td><td>чей</td><td><span class="eo">Kies domo estas tio?</span></td></tr>
+                </table>
+
+                <h4>Вопросы с предлогами</h4>
+                <p>Предлог ставится <b>перед</b> ki-словом:</p>
+                <div class="ex"><b>Pri kio</b> vi parolas? — О чём ты говоришь?</div>
+                <div class="ex"><b>Kun kiu</b> vi iris? — С кем ты пошёл?</div>
+                <div class="ex"><b>Al kiu</b> vi skribas? — Кому ты пишешь?</div>
+                <div class="ex"><b>De kie</b> vi venas? — Откуда ты приехал?</div>
+                <div class="ex"><b>En kio</b> vi kredas? — Во что ты веришь?</div>
+                <div class="ex"><b>Per kio</b> vi skribas? — Чем ты пишешь?</div>
+
+                <h4>kiom da = сколько (с существительным)</h4>
+                <div class="ex"><b>Kiom da</b> pomoj vi havas? — Сколько у тебя яблок?</div>
+                <div class="ex"><b>Kiom</b> vi aĝas? — Сколько тебе лет? (без сущ.)</div>
+                <div class="ex"><b>Kiom</b> da tempo? — Сколько времени?</div>
+
+                <h4>Пара ki- → ti-</h4>
+                <p>Вопрос на <b>ki-</b> часто отвечает слово на <b>ti-</b>:</p>
+                <div class="ex"><b>Kie</b> vi estas? — <b>Tie</b>.</div>
+                <div class="ex"><b>Kiam</b> li venos? — <b>Tiam</b>.</div>
+                <div class="ex"><b>Kial</b> vi ploras? — <b>Tial</b>.</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 22. ПОРЯДОК СЛОВ И СТИЛЬ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-22" data-tags="vortordo порядок слов стиль инверсия эмфаза">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">🎭</span>
+                    <span>Порядок слов и стилистика <span class="gr-level-chip b1">B1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Свободный порядок — благодаря -n</h4>
+                <p>В эсперанто порядок слов <b>гибок</b>, потому что винительный падеж <b>-n</b> показывает, что является объектом. Это позволяет играть акцентами.</p>
+
+                <h4>Четыре варианта одного предложения</h4>
+                <table>
+                    <tr><th>Порядок</th><th>Оттенок</th></tr>
+                    <tr><td><span class="eo">Mi amas vin.</span></td><td>нейтрально</td></tr>
+                    <tr><td><span class="eo">Vin mi amas.</span></td><td>акцент на «тебя»</td></tr>
+                    <tr><td><span class="eo">Mi vin amas.</span></td><td>акцент на «люблю»</td></tr>
+                    <tr><td><span class="eo">Amas mi vin.</span></td><td>поэтично, акцент на действии</td></tr>
+                </table>
+
+                <h4>Правило акцента</h4>
+                <div class="rule-box">
+                    <b>Слово в конце</b> — обычно самое важное (рема).<br>
+                    <b>Слово в начале</b> — тема или контраст.<br>
+                    Это позволяет играть интонацией <b>без изменения смысла</b>.
+                </div>
+
+                <h4>Прилагательное — до или после</h4>
+                <table>
+                    <tr><th>Порядок</th><th>Оттенок</th></tr>
+                    <tr><td><span class="eo">bela floro</span></td><td>нейтрально: красивый цветок</td></tr>
+                    <tr><td><span class="eo">floro bela</span></td><td>поэтично: цветок — красивый</td></tr>
+                </table>
+
+                <h4>Наречие и фокус</h4>
+                <div class="ex"><span class="eo">Li <b>rapide</b> legis la libron.</span> — Он быстро читал (способ).</div>
+                <div class="ex"><span class="eo"><b>Rapide</b> li legis la libron.</span> — Быстро он читал (акцент на скорость).</div>
+
+                <h4>Стилистические приёмы</h4>
+                <table>
+                    <tr><th>Приём</th><th>Пример</th><th>Эффект</th></tr>
+                    <tr><td>Повтор</td><td><span class="eo">Tre, tre bone!</span></td><td>усиление</td></tr>
+                    <tr><td>Анафора</td><td><span class="eo">Mi vidis lin. Mi aŭdis lin. Mi amis lin.</span></td><td>ритм</td></tr>
+                    <tr><td>Инверсия</td><td><span class="eo">Belega ĝi estis!</span></td><td>эмоция</td></tr>
+                    <tr><td>Риторический вопрос</td><td><span class="eo">Kiu ne scias tion?</span></td><td>утверждение</td></tr>
+                </table>
+
+                <h4>Разговорный vs книжный стиль</h4>
+                <table>
+                    <tr><th>Разговорный</th><th>Книжный</th></tr>
+                    <tr><td><span class="eo">Oni diras, ke…</span></td><td><span class="eo">Estas dirate, ke…</span></td></tr>
+                    <tr><td><span class="eo">Mi volas vidi vin.</span></td><td><span class="eo">Mi deziras vidi vin.</span></td></tr>
+                    <tr><td><span class="eo">Tre bone.</span></td><td><span class="eo">Eminente bone.</span></td></tr>
+                    <tr><td><span class="eo">granda domo</span></td><td><span class="eo">domo grandioza</span></td></tr>
+                </table>
+
+                <h4>Примеры</h4>
+                <div class="ex"><span class="eo"><b>Vin</b> mi volas vidi, ne lin.</span> — Тебя я хочу увидеть, а не его.</div>
+                <div class="ex"><span class="eo"><b>Belega</b> ĝi estis, tiu ĉi vespero.</span> — Прекрасен он был, этот вечер.</div>
+                <div class="ex"><span class="eo"><b>Neniam</b> mi forgesos tiun tagon.</span> — Никогда я не забуду тот день.</div>
+                <div class="ex"><span class="eo"><b>Kiu</b> povus tion anticipi?</span> — Кто мог бы это предвидеть?</div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 23. 16 ПРАВИЛ FUNDAMENTO -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-23" data-tags="fundamento 16 reguloj правила Заменгоф fundamento de esperanto">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">📜</span>
+                    <span>16 правил Fundamento <span class="gr-level-chip b1">B1</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Что такое Fundamento</h4>
+                <p><b>Fundamento de Esperanto</b> — основной документ языка, опубликованный в 1905 году. Содержит 16 правил, словарь и примеры. Его <b>нельзя изменять</b> — это «конституция» эсперанто.</p>
+
+                <h4>Все 16 правил</h4>
+
+                <h4>1. Артикль</h4>
+                <p><span class="eo">La</span> — определённый артикль; не изменяется. Неопределённого артикля нет.</p>
+
+                <h4>2. Существительные</h4>
+                <p>Окончание <b>-o</b>. Мн. ч. — <b>-oj</b>. Винительный падеж — <b>-on</b> / <b>-ojn</b>.</p>
+
+                <h4>3. Прилагательные</h4>
+                <p>Окончание <b>-a</b>. Согласуются с сущ. Степени: <span class="eo">pli</span>, <span class="eo">plej</span>, <span class="eo">malpli</span>, <span class="eo">malplej</span>.</p>
+
+                <h4>4. Числительные</h4>
+                <p><span class="eo">unu, du, tri, kvar, kvin, ses, sep, ok, naŭ, dek, cent, mil</span>. Десятки и сотни — слитно. Порядковые — <b>-a</b>, кратные — <b>-obl-</b>, дробные — <b>-on-</b>, собирательные — <b>-op-</b>. <span class="eo">Po</span> — «по».</p>
+
+                <h4>5. Местоимения</h4>
+                <p><span class="eo">mi, vi, li, ŝi, ĝi, ni, ili, oni, si</span>. Притяжательные — с <b>-a</b>.</p>
+
+                <h4>6. Глаголы</h4>
+                <p>Инфинитив — <b>-i</b>. Настоящее — <b>-as</b>. Прошедшее — <b>-is</b>. Будущее — <b>-os</b>. Условное — <b>-us</b>. Повелительное — <b>-u</b>.</p>
+
+                <h4>7. Наречия</h4>
+                <p>Окончание <b>-e</b>. Степени: <span class="eo">pli</span>, <span class="eo">plej</span>.</p>
+
+                <h4>8. Предлоги</h4>
+                <p>Все предлоги управляют <b>именительным</b> падежом.</p>
+
+                <h4>9. Чтение</h4>
+                <p>Каждая буква читается <b>всегда одинаково</b>.</p>
+
+                <h4>10. Ударение</h4>
+                <p><b>Всегда на предпоследнем слоге.</b></p>
+
+                <h4>11. Сложные слова</h4>
+                <p>Образуются <b>простым соединением</b> корней. Главный корень — последний.</p>
+
+                <h4>12. Отрицание</h4>
+                <p><b>ne</b> — общее отрицание. Других отрицательных слов нет — используются <b>neni-</b>.</p>
+
+                <h4>13. Винительный падеж направления</h4>
+                <p>Для указания <b>направления</b> после предлога ставится <b>-n</b>.</p>
+
+                <h4>14. Предлог je</h4>
+                <p>Если не подходит ни один предлог, используется <b>je</b>.</p>
+
+                <h4>15. Заимствованные слова</h4>
+                <p>Иностранные слова берутся <b>без изменений</b>, но с окончанием <b>-o</b> (или другого класса). Могут быть в оригинале.</p>
+
+                <h4>16. Окончание -o</h4>
+                <p>В поэзии <b>-o</b> можно опускать: <span class="eo">kor'</span> вместо <span class="eo">koro</span>.</p>
+
+                <div class="rule-box">
+                    <b>Fundamento — гарантия стабильности языка.</b> Никто не может менять базовые правила. Благодаря этому эсперанто не развалился на диалекты за 140 лет.
+                </div>
+            </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- 24. ЧАСТЫЕ ОШИБКИ -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <article class="grammar-article" id="ga-24" data-tags="eraroj ошибки частые типичные novaj">
+            <div class="grammar-article-header">
+                <div class="grammar-article-title">
+                    <span class="ga-icon">💡</span>
+                    <span>Частые ошибки новичков <span class="gr-level-chip a2">A2</span></span>
+                </div>
+                <div class="grammar-article-chevron">›</div>
+            </div>
+            <div class="grammar-article-body">
+                <h4>Согласование прилагательных</h4>
+                <table>
+                    <tr><th>Неправильно</th><th>Правильно</th><th>Перевод</th></tr>
+                    <tr><td><span class="eo">bonaj domo</span></td><td><span class="eo">bonaj domoj</span></td><td>хорошие дома</td></tr>
+                    <tr><td><span class="eo">bona domoj</span></td><td><span class="eo">bonaj domoj</span></td><td>хорошие дома</td></tr>
+                    <tr><td><span class="eo">Mi vidas bona domon</span></td><td><span class="eo">Mi vidas bonan domon</span></td><td>Я вижу хороший дом</td></tr>
+                </table>
+
+                <h4>Винительный падеж</h4>
+                <table>
+                    <tr><th>Неправильно</th><th>Правильно</th><th>Перевод</th></tr>
+                    <tr><td><span class="eo">Mi amas vi</span></td><td><span class="eo">Mi amas vin</span></td><td>Я люблю тебя</td></tr>
+                    <tr><td><span class="eo">Mi vidas la domo</span></td><td><span class="eo">Mi vidas la domon</span></td><td>Я вижу дом</td></tr>
+                    <tr><td><span class="eo">Ĝi kostas kvin eŭroj</span></td><td><span class="eo">Ĝi kostas kvin eŭrojn</span></td><td>Стоит пять евро</td></tr>
+                </table>
+
+                <h4>Направление vs место</h4>
+                <table>
+                    <tr><th>Смысл</th><th>Форма</th></tr>
+                    <tr><td>Где? (место)</td><td><span class="eo">Mi estas en la domo</span> (без -n)</td></tr>
+                    <tr><td>Куда? (направление)</td><td><span class="eo">Mi iras en la domon</span> (с -n)</td></tr>
+                </table>
+                <p>Ошибка: <span class="eo">✗ Mi iras en la domo</span> → <span class="eo">✓ Mi iras en la domon.</span></p>
+
+                <h4>sia vs lia / ŝia</h4>
+                <table>
+                    <tr><th>Неправильно</th><th>Правильно</th><th>Смысл</th></tr>
+                    <tr><td><span class="eo">Li amas lian patrinon</span> <span class="ru">(когда о своей)</span></td><td><span class="eo">Li amas sian patrinon</span></td><td>Он любит свою мать</td></tr>
+                    <tr><td><span class="eo">Ŝi vidis ŝian fraton</span> <span class="ru">(о своём)</span></td><td><span class="eo">Ŝi vidis sian fraton</span></td><td>Она видела своего брата</td></tr>
+                </table>
+
+                <h4>Ударение — не на первый слог</h4>
+                <p>Частая ошибка русскоязычных — ставить ударение как в русском. В эсперанто оно <b>всегда на предпоследнем</b>:</p>
+                <div class="ex">✗ <span class="eo">ananaso</span> [а-на-на́-со]<br>✓ <span class="eo">ananaso</span> [а-на-на́-со-но — нет, верно: а-на-на́-со] — точно: <b>a-na-NA-so</b></div>
+                <div class="ex">✓ <span class="eo">telefono</span> → te-le-FO-no (не «тэ-лэ-фо-но»)</div>
+
+                <h4>Буква j перед гласной</h4>
+                <p><b>j</b> = «й». Не путайте с <b>ĵ</b> = «ж»:</p>
+                <div class="ex"><b>j</b>una [йу-на] — молодой</div>
+                <div class="ex"><b>ĵ</b>urnalo [жур-на-ло] — газета</div>
+
+                <h4>Буква ŭ только в дифтонгах</h4>
+                <p><b>ŭ</b> встречается только после гласных: <span class="eo">aŭ, eŭ</span> (aŭdi, Eŭropo). Отдельного слова на <b>ŭ</b> нет.</p>
+
+                <h4>Ĉu в вопросе</h4>
+                <table>
+                    <tr><th>Неправильно</th><th>Правильно</th></tr>
+                    <tr><td><span class="eo">Vi parolas Esperanton?</span> <span class="ru">(без ĉu — звучит как утверждение)</span></td><td><span class="eo">Ĉu vi parolas Esperanton?</span></td></tr>
+                </table>
+
+                <h4>Отрицание ne — перед глаголом</h4>
+                <table>
+                    <tr><th>Неправильно</th><th>Правильно</th></tr>
+                    <tr><td><span class="eo">Mi komprenas ne.</span></td><td><span class="eo">Mi ne komprenas.</span></td></tr>
+                    <tr><td><span class="eo">Mi scias ne tion.</span></td><td><span class="eo">Mi ne scias tion.</span></td></tr>
+                </table>
+
+                <h4>Esperanto — не русский</h4>
+                <p>Не переводите дословно с русского! Порядок слов, падежи и конструкции — <b>свои</b>. Особенно:</p>
+                <ul>
+                    <li>Нет «который» со сменой падежа — всегда <b>kiu</b> с согласованием.</li>
+                    <li>Нет «если бы» отдельной частицей — только <b>se … -us</b>.</li>
+                    <li>Нет родительного притяжательного — используется <b>de</b> или притяжательное: <span class="eo">libro de Petro</span> (книга Петра).</li>
+                </ul>
+
+                <div class="rule-box">
+                    <b>Совет:</b> если сомневаетесь — упрощайте. В эсперанто самое простое построение чаще всего самое правильное.
+                </div>
+            </div>
+        </article>
+
+    </div><!-- /grArticles -->
+
+    <!-- Пустое состояние при отсутствии результатов поиска -->
+    <div class="gr-empty" id="grEmpty" style="display:none;">
+        <div class="ge-icon">🔍</div>
+        <h3 style="margin:0 0 8px 0;">Ничего не найдено</h3>
+        <p style="margin:0;">Попробуйте другой запрос или очистите поиск.</p>
+    </div>
+
+    <div class="page-footer">Vulpeto Abeleto • 2026</div>
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="data/courses-a1.js"></script>
+<script src="data/courses-a2.js"></script>
+<script src="data/courses-b1.js"></script>
+<script src="data/courses-b2.js"></script>
+<!-- Данные слов — нужны для подсчёта общего количества в бейдже -->
+<script src="data/words.js"></script>       <!-- на courses/*.html: "../data/words.js" -->
+
+<!-- Данные курсов -->
+<script src="data/courses-a1.js"></script>
+
+<script src="js/ui.js"></script>
+<script src="js/core.js"></script>
+<script src="js/theme.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ═══════════════════════════════════════════════════════
+       Аккордеон — раскрытие/сворачивание статей
+       ═══════════════════════════════════════════════════════ */
+    document.querySelectorAll('.grammar-article-header').forEach(function (header) {
+        header.addEventListener('click', function () {
+            const article = header.closest('.grammar-article');
+            if (!article) return;
+            article.classList.toggle('open');
+        });
+    });
+
+    /* ═══════════════════════════════════════════════════════
+       Оглавление — прокрутка к статье и её раскрытие
+       ═══════════════════════════════════════════════════════ */
+    document.querySelectorAll('#grToc a[data-goto]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const id = link.dataset.goto;
+            const target = document.getElementById(id);
+            if (!target) return;
+
+            // Раскрываем
+            target.classList.add('open');
+
+            // Прокручиваем
+            const content = document.getElementById('content');
+            const top = target.getBoundingClientRect().top
+                      + (content ? content.scrollTop : window.scrollY)
+                      - 20;
+
+            if (content && content.scrollTo) {
+                content.scrollTo({ top: top, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        });
+    });
+
+    /* ═══════════════════════════════════════════════════════
+       Поиск по грамматике
+       ═══════════════════════════════════════════════════════ */
+    const searchInput = document.getElementById('grSearch');
+    const clearBtn = document.getElementById('grClear');
+    const emptyState = document.getElementById('grEmpty');
+    const articles = Array.from(document.querySelectorAll('.grammar-article'));
+
+    // Предвычисляем нормализованный текст каждой статьи для быстрого поиска
+    const index = articles.map(function (a) {
+        const text = (a.textContent || '').toLowerCase();
+        const tags = (a.dataset.tags || '').toLowerCase();
+        return {
+            el: a,
+            haystack: text + ' ' + tags
+        };
+    });
+
+    function runSearch(query) {
+        const q = (query || '').trim().toLowerCase();
+        clearBtn.classList.toggle('visible', q.length > 0);
+
+        if (!q) {
+            // Пустой запрос — показать всё, свернуть подсветку
+            index.forEach(function (item) {
+                item.el.style.display = '';
+            });
+            emptyState.style.display = 'none';
+            return;
+        }
+
+        let visibleCount = 0;
+        index.forEach(function (item) {
+            if (item.haystack.indexOf(q) !== -1) {
+                item.el.style.display = '';
+                visibleCount++;
+            } else {
+                item.el.style.display = 'none';
+            }
+        });
+
+        emptyState.style.display = visibleCount === 0 ? '' : 'none';
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function (e) {
+            runSearch(e.target.value);
+        });
+    }
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+            searchInput.value = '';
+            runSearch('');
+            searchInput.focus();
+        });
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       Инициализация ядра
+       ═══════════════════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', function () {
+        VACore.init();
+        VATheme.init();
+        VACore.updateNavBadges();
+
+        // Если в URL есть хеш — раскрываем и прокручиваем к соответствующей статье
+        if (window.location.hash) {
+            const id = window.location.hash.slice(1);
+            const target = document.getElementById(id);
+            if (target && target.classList.contains('grammar-article')) {
+                target.classList.add('open');
+                setTimeout(function () {
+                    const content = document.getElementById('content');
+                    const top = target.getBoundingClientRect().top
+                              + (content ? content.scrollTop : window.scrollY)
+                              - 20;
+                    if (content && content.scrollTo) {
+                        content.scrollTo({ top: top, behavior: 'smooth' });
+                    }
+                }, 200);
+            }
+        }
+    });
+
+})();
+</script>
+</body>
+</html>

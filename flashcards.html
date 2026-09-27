@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="466 слов эсперанто: SRS-карточки, режим печати, спринт на 60 секунд, словарь и избранное." />
+<title>Слова — VA Esperanto</title>
+<link rel="icon" href="images/VAlogo.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/flashcards.css" />
+
+<script>
+(function () {
+    try {
+        var T = {
+            dark:{'--bg':'#0D110F','--card':'#151A17','--card2':'#1C231E','--input':'#202821','--border':'#29332C','--text':'#F3F6F3','--muted':'#9CA79E','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            light:{'--bg':'#F2F6F2','--card':'#FFFFFF','--card2':'#F7FAF7','--input':'#EEF3EE','--border':'#D9E2D9','--text':'#172019','--muted':'#68736B','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            winter:{'--bg':'#0B1520','--card':'#132234','--card2':'#182B40','--input':'#1D344C','--border':'#274562','--text':'#EAF4FB','--muted':'#8FA8C0','--green':'#4DA6FF','--green-hover':'#6BB8FF','--danger':'#E85D75'},
+            forest:{'--bg':'#0A130E','--card':'#122018','--card2':'#17291F','--input':'#1C3126','--border':'#253D2F','--text':'#E8F2E8','--muted':'#8FAF93','--green':'#2E8B57','--green-hover':'#3DA66A','--danger':'#C9645B'},
+            autumn:{'--bg':'#1A1210','--card':'#241A15','--card2':'#2E211B','--input':'#342720','--border':'#42332A','--text':'#F5EDE5','--muted':'#B8A398','--green':'#D2691E','--green-hover':'#E67E22','--danger':'#C0392B'},
+            cat:   {'--bg':'#14101C','--card':'#1C1826','--card2':'#231E30','--input':'#2A2338','--border':'#3A2F4A','--text':'#F0EAF5','--muted':'#9C93B0','--green':'#F5A623','--green-hover':'#FFB84D','--danger':'#E85D75'}
+        };
+        var r = document.documentElement;
+        var k = localStorage.getItem('va_eo_theme') || 'dark';
+        var t = T[k] || T.dark;
+        r.setAttribute('data-theme-key', k);
+        for (var i in t) if (t.hasOwnProperty(i)) r.style.setProperty(i, t[i]);
+        var p = localStorage.getItem('va_eo_sidebar_pos') || (window.innerWidth<=700?'top':'left');
+        if (p!=='left' && p!=='top') p='left';
+        r.setAttribute('data-sidebar-pos', p);
+        setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-nav-ready')) {
+                document.documentElement.setAttribute('data-nav-ready', '1');
+            }
+        }, 1200);
+    } catch(e){}
+})();
+</script>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a class="logo" href="index.html" title="VA Esperanto — на главную">
+        <div class="logo-icon">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 2 L60 36.25 L95.65 35.17 L66.17 55.25 L78.21 88.83 L50 67 L21.79 88.83 L33.83 55.25 L4.35 35.17 L40 36.25 Z"/>
+    </svg>
+</div>
+        <div class="logo-text">
+            <h1>VA Esperanto</h1>
+            <span>Lernu Esperanton</span>
+        </div>
+    </a>
+    <nav id="nav">
+        <a class="nav-btn" href="index.html" title="Главная">
+            <span class="nav-icon">🏠</span><span class="nav-label">Главная</span>
+        </a>
+        <div class="nav-section-label">Kursoj</div>
+        <a class="nav-btn" href="courses/a1.html"><span class="nav-icon">🌱</span><span class="nav-label">Уровень A1</span><span class="nav-badge" id="navBadgeA1">0/18</span></a>
+        <a class="nav-btn" href="courses/a2.html"><span class="nav-icon">🌿</span><span class="nav-label">Уровень A2</span><span class="nav-badge" id="navBadgeA2">0/16</span></a>
+        <a class="nav-btn" href="courses/b1.html"><span class="nav-icon">🌳</span><span class="nav-label">Уровень B1</span><span class="nav-badge" id="navBadgeB1">0/18</span></a>
+        <a class="nav-btn" href="courses/b2.html"><span class="nav-icon">🌲</span><span class="nav-label">Уровень B2</span><span class="nav-badge" id="navBadgeB2">0/12</span></a>
+        <div class="nav-section-label">Rimedoj</div>
+        <a class="nav-btn" href="grammar.html"><span class="nav-icon">📖</span><span class="nav-label">Грамматика</span></a>
+        <a class="nav-btn active" href="flashcards.html"><span class="nav-icon">🃏</span><span class="nav-label">Слова</span><span class="nav-badge" id="navBadgeWords">0/—</span></a>
+        <a class="nav-btn" href="phrases.html"><span class="nav-icon">🧱</span><span class="nav-label">Конструктор</span></a>
+        <div class="nav-section-label">Aliaj</div>
+        <a class="nav-btn" href="index.html#settings"><span class="nav-icon">⚙️</span><span class="nav-label">Настройки</span></a>
+    </nav>
+</aside>
+
+<main class="content" id="content">
+
+    <div class="fc-page-header">
+        <h2>🃏 Слова — тренажёр эсперанто</h2>
+        <p>Пять режимов, SRS-повторение, спринт на скорость и словарь. Прогресс сохраняется автоматически.</p>
+    </div>
+
+    <!-- ─── ВЕРХНЯЯ СТАТИСТИКА ─── -->
+    <div class="flash-stats">
+        <div class="flash-stat">
+            <div class="fs-num" id="fsDue">—</div>
+            <div class="fs-lbl">К повторению</div>
+        </div>
+        <div class="flash-stat blue">
+            <div class="fs-num" id="fsLearned">—</div>
+            <div class="fs-lbl">Изучено</div>
+        </div>
+        <div class="flash-stat gold">
+            <div class="fs-num" id="fsTotal">—</div>
+            <div class="fs-lbl">Всего в базе</div>
+        </div>
+        <div class="flash-stat red">
+            <div class="fs-num" id="fsStreak">0</div>
+            <div class="fs-lbl">Серия ответов</div>
+        </div>
+    </div>
+
+    <!-- ─── СЛОВО ДНЯ ─── -->
+    <div class="fc-wotd" id="wordOfDay"></div>
+
+    <!-- ─── ДНЕВНАЯ ЦЕЛЬ ПО СЛОВАМ ─── -->
+    <div class="fc-daily-goal">
+        <div class="fcg-label">
+            <span>🎯 Дневная цель по словам</span>
+            <span id="fcgText">0 / 20</span>
+        </div>
+        <div class="fcg-bar">
+            <div class="fcg-fill" id="fcgFill" style="width:0%;"></div>
+        </div>
+    </div>
+
+    <!-- ─── ФИЛЬТРЫ ─── -->
+    <div class="fc-filters">
+        <div class="fc-filter">
+            <label for="flLevel">Курс</label>
+            <select id="flLevel">
+                <option value="all">Все курсы</option>
+                <option value="a1">🌱 A1 — Начальный</option>
+                <option value="a2">🌿 A2 — Базовый</option>
+                <option value="b1">🌳 B1 — Средний</option>
+                <option value="b2">🌲 B2 — Продвинутый</option>
+            </select>
+        </div>
+        <div class="fc-filter">
+            <label for="flLesson">Урок</label>
+            <select id="flLesson"><option value="all">Все уроки</option></select>
+        </div>
+        <div class="fc-filter">
+            <label for="flCat">Категория</label>
+            <select id="flCat"><option value="all">Все категории</option></select>
+        </div>
+        <div class="fc-filter">
+            <label for="flDeck">Колода</label>
+            <select id="flDeck">
+                <option value="all">Все слова</option>
+                <option value="new">Только новые</option>
+                <option value="due">К повторению</option>
+                <option value="learned">Изученные</option>
+                <option value="errors">⭐ Мои ошибки</option>
+                <option value="favorites">❤ Избранное</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- ─── ПРОГРЕСС ПО КОЛОДЕ + ПРОГНОЗ SRS ─── -->
+    <div class="fc-deck-progress">
+        <div class="fdp-label">
+            <span id="deckTitle">Все слова</span>
+            <span id="deckStats">0 из 0 · 0%</span>
+        </div>
+        <div class="fc-deck-bar">
+            <div class="fc-deck-bar-fill" id="deckFill" style="width:0%;"></div>
+        </div>
+        <div class="fc-forecast" id="fcForecast"></div>
+    </div>
+
+    <!-- ─── РЕЖИМЫ ─── -->
+    <div class="fc-tabs" id="modeTabs">
+        <button class="fc-tab active" data-mode="srs">
+            <span class="fc-tab-icon">🎯</span>
+            <span class="fc-tab-label">Игра</span>
+        </button>
+        <button class="fc-tab" data-mode="type">
+            <span class="fc-tab-icon">✍️</span>
+            <span class="fc-tab-label">Печать</span>
+        </button>
+        <button class="fc-tab" data-mode="reverse">
+            <span class="fc-tab-icon">🔄</span>
+            <span class="fc-tab-label">Наоборот</span>
+        </button>
+        <button class="fc-tab" data-mode="sprint">
+            <span class="fc-tab-icon">⚡</span>
+            <span class="fc-tab-label">Спринт</span>
+        </button>
+        <button class="fc-tab" data-mode="dict">
+            <span class="fc-tab-icon">📖</span>
+            <span class="fc-tab-label">Словарь</span>
+        </button>
+    </div>
+
+    <!-- ─── ЗОНА КАРТОЧКИ (SRS / Печать / Наоборот / Спринт) ─── -->
+    <div id="cardZone"></div>
+
+    <!-- ─── ЗОНА СЛОВАРЯ ─── -->
+    <div id="dictZone" style="display:none;">
+        <div class="dict-actions">
+            <button class="btn btn-secondary" id="dictExportAnki">📤 Экспорт в Anki (CSV)</button>
+            <span class="dict-count" id="dictCount"></span>
+        </div>
+        <input type="text" class="vortaro-search" id="vortaroSearch" placeholder="🔍 Поиск по эсперанто или по-русски..." autocomplete="off" />
+        <div class="vortaro-list" id="vortaroList"></div>
+    </div>
+
+    <!-- ─── ПОДСКАЗКА ПО КЛАВИШАМ ─── -->
+    <div class="fc-kbd-hint">
+        <span class="gen-kbd">Space</span> — перевернуть / далее ·
+        <span class="gen-kbd">1</span> — повторить ·
+        <span class="gen-kbd">2</span> — знаю ·
+        <span class="gen-kbd">F</span> — избранное ·
+        <span class="gen-kbd">Enter</span> — проверить (ввод)
+    </div>
+
+    <div class="page-footer">Vulpeto Abeleto • 2026</div>
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- Данные слов -->
+<script src="data/words.js"></script>
+
+<!-- Данные курсов — для бейджей -->
+<script src="data/courses-a1.js"></script>
+<script src="data/courses-a2.js"></script>
+<script src="data/courses-b1.js"></script>
+<script src="data/courses-b2.js"></script>
+
+<!-- Модули -->
+<script src="js/ui.js"></script>
+<script src="js/core.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/flashcards.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    VACore.init();
+    VATheme.init();
+    VAFlashcards.mount();
+    VACore.updateNavBadges();
+});
+</script>
+</body>
+</html>

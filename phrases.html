@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="VA Esperanto — конструктор фраз на эсперанто: собирайте осмысленные предложения и учитесь." />
+<title>Конструктор фраз — VA Esperanto</title>
+<link rel="icon" href="images/VAlogo.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/sidebar.css" />
+
+<!-- Мгновенное применение темы (без вспышки) + fallback nav -->
+<script>
+(function () {
+    try {
+        var T = {
+            dark:{'--bg':'#0D110F','--card':'#151A17','--card2':'#1C231E','--input':'#202821','--border':'#29332C','--text':'#F3F6F3','--muted':'#9CA79E','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            light:{'--bg':'#F2F6F2','--card':'#FFFFFF','--card2':'#F7FAF7','--input':'#EEF3EE','--border':'#D9E2D9','--text':'#172019','--muted':'#68736B','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            winter:{'--bg':'#0B1520','--card':'#132234','--card2':'#182B40','--input':'#1D344C','--border':'#274562','--text':'#EAF4FB','--muted':'#8FA8C0','--green':'#4DA6FF','--green-hover':'#6BB8FF','--danger':'#E85D75'},
+            forest:{'--bg':'#0A130E','--card':'#122018','--card2':'#17291F','--input':'#1C3126','--border':'#253D2F','--text':'#E8F2E8','--muted':'#8FAF93','--green':'#2E8B57','--green-hover':'#3DA66A','--danger':'#C9645B'},
+            autumn: { '--bg':'#1A1210','--card':'#241A15','--card2':'#2E211B','--input':'#342720','--border':'#42332A','--text':'#F5EDE5','--muted':'#B8A398','--green':'#D2691E','--green-hover':'#E67E22','--danger':'#C0392B' },
+            cat:    { '--bg':'#14101C','--card':'#1C1826','--card2':'#231E30','--input':'#2A2338','--border':'#3A2F4A','--text':'#F0EAF5','--muted':'#9C93B0','--green':'#F5A623','--green-hover':'#FFB84D','--danger':'#E85D75' }
+        };
+        var r = document.documentElement;
+        var k = localStorage.getItem('va_eo_theme') || 'dark';
+        var t = T[k] || T.dark;
+        r.setAttribute('data-theme-key', k);
+        for (var i in t) if (t.hasOwnProperty(i)) r.style.setProperty(i, t[i]);
+        var p = localStorage.getItem('va_eo_sidebar_pos');
+        if (!p) p = window.innerWidth<=700 ? 'top' : 'left';
+        if (p!=='left' && p!=='top') p='left';
+        r.setAttribute('data-sidebar-pos', p);
+
+        // Резервный таймер — если theme.js не выполнится, показать nav
+        setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-nav-ready')) {
+                document.documentElement.setAttribute('data-nav-ready', '1');
+            }
+        }, 1200);
+    } catch(e){}
+})();
+</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   КОНСТРУКТОР ФРАЗ — стили страницы
+   ═══════════════════════════════════════════════════════════ */
+.gen-page{padding-bottom:40px;}
+.gen-page-header{margin-bottom:20px;}
+.gen-page-header h2{font-size:28px;font-weight:700;line-height:1.25;margin-bottom:4px;}
+.gen-page-header p{color:var(--muted);font-size:15px;line-height:1.5;max-width:640px;}
+
+.gen-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;}
+.gen-stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:transform var(--transition);}
+.gen-stat:hover{transform:translateY(-2px);}
+.gen-stat .gs-num{font-size:22px;font-weight:900;color:var(--green);line-height:1.1;}
+.gen-stat.fire .gs-num{color:#FF7043;}
+.gen-stat.gold .gs-num{color:var(--gold);}
+.gen-stat .gs-lbl{font-size:11.5px;color:var(--muted);margin-top:4px;font-weight:600;line-height:1.3;}
+
+.gen-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:14px;align-items:center;}
+.gen-controls .gc-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-right:4px;}
+.gen-chip{background:var(--input);border:1.5px solid transparent;color:var(--muted);padding:7px 14px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:all var(--transition);font-family:inherit;line-height:1.3;}
+.gen-chip:hover{color:var(--text);border-color:var(--border);}
+.gen-chip.active{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 4px 12px rgba(0,160,0,.2);}
+
+.gen-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 30px;margin-bottom:20px;position:relative;overflow:hidden;}
+.gen-card::before{content:'🧱';position:absolute;right:-20px;top:-30px;font-size:180px;opacity:.03;pointer-events:none;line-height:1;user-select:none;}
+.gen-label{font-size:11.5px;font-weight:800;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1;}
+.gen-prompt{font-size:22px;font-weight:800;color:var(--text);line-height:1.4;margin-bottom:22px;position:relative;z-index:1;padding-bottom:20px;border-bottom:1px dashed var(--border);}
+.gen-prompt .gen-prompt-hint{display:block;font-size:13.5px;font-weight:600;color:var(--muted);margin-top:10px;font-style:italic;}
+
+.gen-slots{min-height:76px;background:var(--input);border:2px dashed var(--border);border-radius:14px;padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px;transition:all var(--transition);position:relative;z-index:1;}
+.gen-slots.has-words{border-style:solid;border-color:var(--green);background:rgba(0,160,0,.05);}
+.gen-slots.correct{border-color:var(--green);background:rgba(0,160,0,.12);box-shadow:0 0 0 4px rgba(0,160,0,.15);}
+.gen-slots.wrong{border-color:var(--danger);background:rgba(217,83,79,.1);animation:genShake .4s ease;}
+@keyframes genShake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+.gen-slot-placeholder{color:var(--muted);font-size:13.5px;font-style:italic;opacity:.7;padding:6px 10px;}
+.gen-word{background:var(--green);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;transition:all var(--transition);font-family:inherit;line-height:1.3;position:relative;}
+.gen-word:hover{background:var(--danger);transform:translateY(-2px);}
+.gen-word::after{content:'✕';position:absolute;top:-6px;right:-6px;background:var(--danger);color:#fff;width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--transition);}
+.gen-word:hover::after{opacity:1;}
+.gen-word.hint-glow{box-shadow:0 0 0 4px rgba(0,160,0,.35);animation:genPulse 1s ease infinite;}
+@keyframes genPulse{0%,100%{box-shadow:0 0 0 4px rgba(0,160,0,.35);}50%{box-shadow:0 0 0 10px rgba(0,160,0,.1);}}
+
+.gen-pool-label{font-size:11.5px;font-weight:800;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1;}
+.gen-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;position:relative;z-index:1;}
+.gen-pool-word{background:var(--input);border:1.5px solid var(--border);color:var(--text);padding:9px 16px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;transition:all var(--transition);font-family:inherit;line-height:1.3;position:relative;}
+.gen-pool-word:hover:not(:disabled){border-color:var(--green);color:var(--green);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,160,0,.15);}
+.gen-pool-word:disabled{opacity:.25;cursor:not-allowed;pointer-events:none;}
+
+.gen-feedback{display:none;padding:14px 18px;border-radius:12px;font-size:14.5px;font-weight:700;line-height:1.55;margin-bottom:18px;position:relative;z-index:1;}
+.gen-feedback.show{display:block;animation:genFadeIn .3s ease;}
+@keyframes genFadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.gen-feedback.ok{background:rgba(0,160,0,.12);color:var(--green);border-left:4px solid var(--green);}
+.gen-feedback.err{background:rgba(217,83,79,.12);color:var(--danger);border-left:4px solid var(--danger);}
+.gen-feedback .gf-answer{display:block;margin-top:6px;font-size:16px;color:var(--text);font-weight:800;}
+.gen-feedback .gf-note{display:block;margin-top:4px;font-size:12.5px;font-weight:600;opacity:.85;}
+
+.gen-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;}
+.gen-btn{padding:12px 22px;border-radius:12px;border:none;font-weight:800;font-size:14px;cursor:pointer;transition:all var(--transition);font-family:inherit;line-height:1.3;display:inline-flex;align-items:center;gap:8px;}
+.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none !important;}
+.gen-btn-primary{background:var(--green);color:#fff;flex:1;min-width:160px;justify-content:center;}
+.gen-btn-primary:hover:not(:disabled){background:var(--green-hover);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,160,0,.25);}
+.gen-btn-secondary{background:var(--card2);color:var(--text);}
+.gen-btn-secondary:hover:not(:disabled){background:var(--border);transform:translateY(-2px);}
+.gen-btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--muted);}
+.gen-btn-ghost:hover:not(:disabled){border-color:var(--green);color:var(--green);}
+.gen-kbd-hint{margin-top:18px;font-size:12px;color:var(--muted);text-align:center;opacity:.7;}
+.gen-kbd{background:var(--input);border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-family:monospace;font-size:11px;font-weight:800;color:var(--text);}
+
+@media (max-width:700px){
+    .gen-page-header h2{font-size:22px;}
+    .gen-card{padding:20px 18px;}
+    .gen-prompt{font-size:18px;}
+    .gen-pool-word{padding:8px 13px;font-size:13.5px;}
+    .gen-word{padding:7px 12px;font-size:13.5px;}
+    .gen-btn{padding:11px 16px;font-size:13.5px;}
+    .gen-btn-primary{min-width:0;width:100%;}
+    .gen-stats{grid-template-columns:repeat(2,1fr);}
+    .gen-controls{padding:10px 12px;gap:6px;}
+    .gen-chip{padding:6px 11px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a class="logo" href="index.html" title="VA Esperanto — на главную">
+        <div class="logo-icon">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 2 L60 36.25 L95.65 35.17 L66.17 55.25 L78.21 88.83 L50 67 L21.79 88.83 L33.83 55.25 L4.35 35.17 L40 36.25 Z"/>
+    </svg>
+</div>
+        <div class="logo-text">
+            <h1>VA Esperanto</h1>
+            <span>Lernu Esperanton</span>
+        </div>
+    </a>
+    <nav id="nav">
+        <a class="nav-btn" href="index.html" title="Главная">
+            <span class="nav-icon">🏠</span><span class="nav-label">Главная</span>
+        </a>
+        <div class="nav-section-label">Kursoj</div>
+        <a class="nav-btn" href="courses/a1.html" title="Уровень A1">
+            <span class="nav-icon">🌱</span><span class="nav-label">Уровень A1</span>
+            <span class="nav-badge" id="navBadgeA1">0/18</span>
+        </a>
+        <a class="nav-btn" href="courses/a2.html" title="Уровень A2">
+            <span class="nav-icon">🌿</span><span class="nav-label">Уровень A2</span>
+            <span class="nav-badge" id="navBadgeA2">0/16</span>
+        </a>
+        <a class="nav-btn" href="courses/b1.html" title="Уровень B1">
+            <span class="nav-icon">🌳</span><span class="nav-label">Уровень B1</span>
+            <span class="nav-badge" id="navBadgeB1">0/18</span>
+        </a>
+        <a class="nav-btn" href="courses/b2.html" title="Уровень B2">
+            <span class="nav-icon">🌲</span><span class="nav-label">Уровень B2</span>
+            <span class="nav-badge" id="navBadgeB2">0/12</span>
+        </a>
+        <div class="nav-section-label">Rimedoj</div>
+        <a class="nav-btn" href="grammar.html" title="Грамматика">
+            <span class="nav-icon">📖</span><span class="nav-label">Грамматика</span>
+        </a>
+        <a class="nav-btn" href="flashcards.html" title="Слова">
+            <span class="nav-icon">🃏</span><span class="nav-label">Слова</span>
+            <span class="nav-badge" id="navBadgeWords">0/466</span>
+        </a>
+        <a class="nav-btn active" href="phrases.html" title="Конструктор фраз">
+            <span class="nav-icon">🧱</span><span class="nav-label">Конструктор</span>
+        </a>
+        <div class="nav-section-label">Aliaj</div>
+        <a class="nav-btn" href="index.html#settings" title="Настройки">
+            <span class="nav-icon">⚙️</span><span class="nav-label">Настройки</span>
+        </a>
+    </nav>
+</aside>
+
+<main class="content" id="content">
+    <div class="gen-page" id="genPage">
+
+        <div class="gen-page-header">
+            <h2>🧱 Конструктор фраз</h2>
+            <p>Соберите предложение на эсперанто. Все фразы осмысленные и грамматически согласованы.</p>
+        </div>
+
+        <div class="gen-stats">
+            <div class="gen-stat fire"><div class="gs-num" id="gsStreak">0</div><div class="gs-lbl">Серия подряд</div></div>
+            <div class="gen-stat"><div class="gs-num" id="gsCorrect">0</div><div class="gs-lbl">Правильно</div></div>
+            <div class="gen-stat"><div class="gs-num" id="gsTotal">0</div><div class="gs-lbl">Всего попыток</div></div>
+            <div class="gen-stat gold"><div class="gs-num" id="gsBest">0</div><div class="gs-lbl">Лучшая серия</div></div>
+        </div>
+
+        <div class="gen-controls">
+            <span class="gc-label">Уровень:</span>
+            <button class="gen-chip active" data-level="1">🌱 Простой</button>
+            <button class="gen-chip" data-level="2">🌿 Средний</button>
+            <button class="gen-chip" data-level="3">🌳 Сложный</button>
+            <button class="gen-chip" data-level="all">🎲 Микс</button>
+        </div>
+
+        <div class="gen-card">
+            <div class="gen-label">Соберите предложение на эсперанто</div>
+            <div class="gen-prompt" id="genPrompt">…</div>
+
+            <div class="gen-slots" id="genSlots"></div>
+
+            <div class="gen-pool-label">Доступные слова</div>
+            <div class="gen-pool" id="genPool"></div>
+
+            <div class="gen-feedback" id="genFeedback"></div>
+
+            <div class="gen-actions">
+                <button class="gen-btn gen-btn-primary" id="genCheck" disabled>✓ Проверить</button>
+                <button class="gen-btn gen-btn-secondary" id="genHint">💡 Подсказка</button>
+                <button class="gen-btn gen-btn-ghost" id="genNext">⏭ Следующее</button>
+            </div>
+
+            <div class="gen-kbd-hint">
+                <span class="gen-kbd">Enter</span> — проверить / следующее ·
+                <span class="gen-kbd">Backspace</span> — убрать слово
+            </div>
+        </div>
+
+        <div class="page-footer">Vulpeto Abeleto · 2026</div>
+    </div>
+</main>
+
+<!-- Общий тост -->
+<div class="toast" id="toast"></div>
+
+<!-- Модальное окно (нужно ядру) -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+
+<!-- Данные курсов — чтобы core.js корректно считал бейджи -->
+<script src="data/courses-a1.js"></script>
+<script src="data/courses-a2.js"></script>
+<script src="data/courses-b1.js"></script>
+<script src="data/courses-b2.js"></script>
+<!-- Данные слов — нужны для подсчёта общего количества в бейдже -->
+<script src="data/words.js"></script>       <!-- на courses/*.html: "../data/words.js" -->
+
+<!-- Данные курсов -->
+<script src="data/courses-a1.js"></script>
+
+<!-- Общие модули -->
+<script src="js/ui.js"></script>
+<script src="js/core.js"></script>
+<script src="js/theme.js"></script>
+
+<!-- Логика конструктора -->
+<script>
+(function (global) {
+'use strict';
+
+/* ═══════════════════════════════════════════════════════════
+   ПОДЛЕЖАЩИЕ
+   ═══════════════════════════════════════════════════════════ */
+const SUBJ_SG = [
+    { eo:'la knabo',    ru:'мальчик',  g:'m' },
+    { eo:'la knabino',  ru:'девочка',  g:'f' },
+    { eo:'la patro',    ru:'отец',     g:'m' },
+    { eo:'la patrino',  ru:'мать',     g:'f' },
+    { eo:'la amiko',    ru:'друг',     g:'m' },
+    { eo:'la amikino',  ru:'подруга',  g:'f' },
+    { eo:'la studento', ru:'студент',  g:'m' },
+    { eo:'la instruisto', ru:'учитель', g:'m' },
+    { eo:'la viro',     ru:'мужчина',  g:'m' },
+    { eo:'la virino',   ru:'женщина',  g:'f' },
+    { eo:'li',          ru:'он',       g:'m' },
+    { eo:'ŝi',          ru:'она',      g:'f' }
+];
+
+const SUBJ_PL = [
+    { eo:'la knaboj',    ru:'мальчики' },
+    { eo:'la knabinoj',  ru:'девочки'  },
+    { eo:'la amikoj',    ru:'друзья'   },
+    { eo:'la studentoj', ru:'студенты' },
+    { eo:'ili',          ru:'они'      }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   ГЛАГОЛЫ
+   ═══════════════════════════════════════════════════════════ */
+const VERBS = {
+    'manĝi':  { ru:'есть',     pres_sg:'ест',     pres_pl:'едят',    past_m:'ел',       past_f:'ела',     past_pl:'ели'      },
+    'trinki': { ru:'пить',     pres_sg:'пьёт',    pres_pl:'пьют',    past_m:'пил',      past_f:'пила',    past_pl:'пили'     },
+    'legi':   { ru:'читать',   pres_sg:'читает',  pres_pl:'читают',  past_m:'читал',    past_f:'читала',  past_pl:'читали'   },
+    'skribi': { ru:'писать',   pres_sg:'пишет',   pres_pl:'пишут',   past_m:'писал',    past_f:'писала',  past_pl:'писали'   },
+    'vidi':   { ru:'видеть',   pres_sg:'видит',   pres_pl:'видят',   past_m:'видел',    past_f:'видела',  past_pl:'видели'   },
+    'aŭdi':   { ru:'слышать',  pres_sg:'слышит',  pres_pl:'слышат',  past_m:'слышал',   past_f:'слышала', past_pl:'слышали'  },
+    'ami':    { ru:'любить',   pres_sg:'любит',   pres_pl:'любят',   past_m:'любил',    past_f:'любила',  past_pl:'любили'   },
+    'lerni':  { ru:'учить',    pres_sg:'учит',    pres_pl:'учат',    past_m:'учил',     past_f:'учила',   past_pl:'учили'    },
+    'aĉeti':  { ru:'покупать', pres_sg:'покупает',pres_pl:'покупают',past_m:'покупал',  past_f:'покупала',past_pl:'покупали' },
+    'atendi': { ru:'ждать',    pres_sg:'ждёт',    pres_pl:'ждут',    past_m:'ждал',     past_f:'ждала',   past_pl:'ждали'    }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   СХЕМЫ
+   ═══════════════════════════════════════════════════════════ */
+const SCHEMAS = [
+    {
+        verb: 'manĝi',
+        objects: [
+            { eo:'panon',    ru:'хлеб'   },
+            { eo:'pomon',    ru:'яблоко' },
+            { eo:'fromaĝon', ru:'сыр'    },
+            { eo:'viandon',  ru:'мясо'   },
+            { eo:'supon',    ru:'суп'    }
+        ]
+    },
+    {
+        verb: 'trinki',
+        objects: [
+            { eo:'akvon', ru:'воду'   },
+            { eo:'teon',  ru:'чай'    },
+            { eo:'kafon', ru:'кофе'   },
+            { eo:'lakton',ru:'молоко' },
+            { eo:'sukon', ru:'сок'    }
+        ]
+    },
+    {
+        verb: 'legi',
+        objects: [
+            { eo:'libron',  ru:'книгу'  },
+            { eo:'leteron', ru:'письмо' },
+            { eo:'gazeton', ru:'газету' },
+            { eo:'revuon',  ru:'журнал' }
+        ]
+    },
+    {
+        verb: 'skribi',
+        objects: [
+            { eo:'leteron', ru:'письмо' },
+            { eo:'libron',  ru:'книгу'  },
+            { eo:'raporton',ru:'отчёт'  }
+        ]
+    },
+    {
+        verb: 'vidi',
+        objects: [
+            { eo:'knabon',   ru:'мальчика' },
+            { eo:'knabinon', ru:'девочку'  },
+            { eo:'hundon',   ru:'собаку'   },
+            { eo:'katon',    ru:'кота'     },
+            { eo:'birdon',   ru:'птицу'    },
+            { eo:'domon',    ru:'дом'      },
+            { eo:'sunon',    ru:'солнце'   },
+            { eo:'lunon',    ru:'луну'     }
+        ]
+    },
+    {
+        verb: 'aŭdi',
+        objects: [
+            { eo:'muzikon', ru:'музыку' },
+            { eo:'kanton',  ru:'песню'  },
+            { eo:'birdon',  ru:'птицу'  },
+            { eo:'voĉon',   ru:'голос'  }
+        ]
+    },
+    {
+        verb: 'ami',
+        objects: [
+            { eo:'patrinon', ru:'мать'     },
+            { eo:'patron',   ru:'отца'     },
+            { eo:'knabon',   ru:'мальчика' },
+            { eo:'knabinon', ru:'девочку'  }
+        ]
+    },
+    {
+        verb: 'lerni',
+        subjects: 'learners',
+        objects: [
+            { eo:'Esperanton', ru:'эсперанто'   },
+            { eo:'la anglan',  ru:'английский'  },
+            { eo:'la rusan',   ru:'русский'     },
+            { eo:'la francan', ru:'французский' }
+        ]
+    },
+    {
+        verb: 'aĉeti',
+        objects: [
+            { eo:'panon',  ru:'хлеб'    },
+            { eo:'pomon',  ru:'яблоко'  },
+            { eo:'lakton', ru:'молоко'  },
+            { eo:'libron', ru:'книгу'   },
+            { eo:'florojn',ru:'цветы'   }
+        ]
+    },
+    {
+        verb: 'atendi',
+        objects: [
+            { eo:'amikon',   ru:'друга'  },
+            { eo:'patron',   ru:'отца'   },
+            { eo:'patrinon', ru:'мать'   },
+            { eo:'hundon',   ru:'собаку' }
+        ]
+    }
+];
+
+const LEARNER_SUBJ_SG = [
+    { eo:'la knabo',    ru:'мальчик',  g:'m' },
+    { eo:'la knabino',  ru:'девочка',  g:'f' },
+    { eo:'la studento', ru:'студент',  g:'m' },
+    { eo:'la studentino', ru:'студентка', g:'f' },
+    { eo:'la instruisto', ru:'учитель', g:'m' },
+    { eo:'li',          ru:'он',       g:'m' },
+    { eo:'ŝi',          ru:'она',      g:'f' }
+];
+
+const ADVERBS = [
+    { eo:'rapide',  ru:'быстро'  },
+    { eo:'bone',    ru:'хорошо'  },
+    { eo:'ofte',    ru:'часто'   },
+    { eo:'kune',    ru:'вместе'  }
+];
+
+const PLACES = [
+    { eo:'en la domo',     ru:'в доме'           },
+    { eo:'en la urbo',     ru:'в городе'         },
+    { eo:'en la ĝardeno',  ru:'в саду'           },
+    { eo:'en la lernejo',  ru:'в школе'          },
+    { eo:'sur la strato',  ru:'на улице'         },
+    { eo:'ĉe la fenestro', ru:'у окна'           }
+];
+
+const TIMES = [
+    { eo:'hieraŭ', ru:'вчера',   tense:'past' },
+    { eo:'nun',    ru:'сейчас',  tense:'pres' },
+    { eo:'morgaŭ', ru:'завтра',  tense:'fut'  }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   УТИЛИТЫ
+   ═══════════════════════════════════════════════════════════ */
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+function verbEo(inf, tense){
+    const stem = inf.slice(0,-1);
+    if (tense === 'past') return stem + 'is';
+    if (tense === 'fut')  return stem + 'os';
+    return stem + 'as';
+}
+
+function verbRu(inf, tense, isPlural, gender){
+    const v = VERBS[inf];
+    if (!v) return '?';
+    if (tense === 'past'){
+        if (isPlural) return v.past_pl;
+        return gender === 'f' ? v.past_f : v.past_m;
+    }
+    if (tense === 'fut'){
+        return (isPlural ? 'будут ' : 'будет ') + v.ru;
+    }
+    return isPlural ? v.pres_pl : v.pres_sg;
+}
+
+function generateSentence(level){
+    const schema = pick(SCHEMAS);
+    const isPlural = Math.random() < 0.22;
+
+    let subjPool;
+    if (schema.subjects === 'learners'){
+        subjPool = isPlural ? SUBJ_PL : LEARNER_SUBJ_SG;
+    } else {
+        subjPool = isPlural ? SUBJ_PL : SUBJ_SG;
+    }
+    const subj = pick(subjPool);
+    const gender = subj.g || 'm';
+
+    const obj = pick(schema.objects);
+
+    let time = null, tense = 'pres';
+    if (level !== 1 && Math.random() < 0.35){
+        time = pick(TIMES);
+        tense = time.tense;
+    }
+
+    let adv = null;
+    if (level === 3 && Math.random() < 0.25){
+        adv = pick(ADVERBS);
+    }
+
+    let place = null;
+    if (level === 3 && Math.random() < 0.3){
+        place = pick(PLACES);
+    }
+
+    const eoParts = [];
+    if (time)  eoParts.push(...time.eo.split(' '));
+    eoParts.push(...subj.eo.split(' '));
+    eoParts.push(verbEo(schema.verb, tense));
+    eoParts.push(obj.eo);
+    if (adv)   eoParts.push(adv.eo);
+    if (place) eoParts.push(...place.eo.split(' '));
+
+    const ruParts = [];
+    if (time)  ruParts.push(time.ru);
+    ruParts.push(subj.ru);
+    ruParts.push(verbRu(schema.verb, tense, isPlural, gender));
+    ruParts.push(obj.ru);
+    if (adv)   ruParts.push(adv.ru);
+    if (place) ruParts.push(place.ru);
+
+    return {
+        eoCorrect: eoParts,
+        eoPool: shuffle(eoParts),
+        ru: ruParts.join(' ')
+    };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   СОСТОЯНИЕ
+   ═══════════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'va_eo_phrase_v3';
+let state = {
+    level: 1,
+    current: null,
+    built: [],
+    usedPoolIdx: new Set(),
+    checked: false,
+    streak: 0, correct: 0, total: 0, best: 0
+};
+let autoNextTimer = null;
+
+function loadState(){
+    try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const p = JSON.parse(raw);
+        state.streak  = p.streak  || 0;
+        state.correct = p.correct || 0;
+        state.total   = p.total   || 0;
+        state.best    = p.best    || 0;
+        state.level   = p.level   || 1;
+    }catch(e){}
+}
+function saveState(){
+    try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            streak: state.streak, correct: state.correct,
+            total: state.total, best: state.best, level: state.level
+        }));
+    }catch(e){}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DOM
+   ═══════════════════════════════════════════════════════════ */
+const $prompt    = document.getElementById('genPrompt');
+const $slots     = document.getElementById('genSlots');
+const $pool      = document.getElementById('genPool');
+const $feedback  = document.getElementById('genFeedback');
+const $check     = document.getElementById('genCheck');
+const $hint      = document.getElementById('genHint');
+const $next      = document.getElementById('genNext');
+const $gsStreak  = document.getElementById('gsStreak');
+const $gsCorrect = document.getElementById('gsCorrect');
+const $gsTotal   = document.getElementById('gsTotal');
+const $gsBest    = document.getElementById('gsBest');
+
+function renderStats(){
+    $gsStreak.textContent  = state.streak;
+    $gsCorrect.textContent = state.correct;
+    $gsTotal.textContent   = state.total;
+    $gsBest.textContent    = state.best;
+}
+
+function renderPrompt(){
+    if (!state.current) return;
+    $prompt.innerHTML = state.current.ru +
+        '<span class="gen-prompt-hint">Соберите это предложение на эсперанто ↓</span>';
+}
+
+function renderSlots(){
+    if (state.built.length === 0){
+        $slots.classList.remove('has-words','correct','wrong');
+        $slots.innerHTML = '<span class="gen-slot-placeholder">Нажимайте слова ниже, чтобы собрать фразу</span>';
+        return;
+    }
+    $slots.classList.add('has-words');
+    $slots.innerHTML = state.built.map((w,i)=>
+        '<button type="button" class="gen-word" data-slot-idx="'+i+'">'+w+'</button>'
+    ).join('');
+    $slots.querySelectorAll('.gen-word').forEach(b=>
+        b.addEventListener('click', ()=>removeFromSlot(+b.dataset.slotIdx)));
+}
+
+function renderPool(){
+    if (!state.current) return;
+    $pool.innerHTML = state.current.eoPool.map((w,i)=>
+        '<button type="button" class="gen-pool-word" data-pool-idx="'+i+'">'+w+'</button>'
+    ).join('');
+    $pool.querySelectorAll('.gen-pool-word').forEach(b=>{
+        const idx = +b.dataset.poolIdx;
+        if (state.usedPoolIdx.has(idx)) b.disabled = true;
+        b.addEventListener('click', ()=>addToSlot(idx));
+    });
+    updateCheckBtn();
+}
+
+function updateCheckBtn(){
+    const ok = state.current && state.built.length === state.current.eoCorrect.length;
+    $check.disabled = !ok || state.checked;
+}
+
+function clearFeedback(){
+    $feedback.classList.remove('show','ok','err');
+    $feedback.innerHTML = '';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ВЗАИМОДЕЙСТВИЕ
+   ═══════════════════════════════════════════════════════════ */
+function addToSlot(poolIdx){
+    if (state.checked || state.usedPoolIdx.has(poolIdx)) return;
+    const w = state.current.eoPool[poolIdx];
+    state.usedPoolIdx.add(poolIdx);
+    state.built.push(w);
+    renderSlots(); renderPool();
+}
+
+function removeFromSlot(slotIdx){
+    if (state.checked) return;
+    const w = state.built[slotIdx];
+    state.built.splice(slotIdx, 1);
+    for (let i = 0; i < state.current.eoPool.length; i++){
+        if (state.current.eoPool[i] === w && state.usedPoolIdx.has(i)){
+            state.usedPoolIdx.delete(i); break;
+        }
+    }
+    renderSlots(); renderPool();
+}
+
+function check(){
+    if (state.checked) return;
+    if (state.built.length !== state.current.eoCorrect.length) return;
+
+    const ok = state.built.join(' ') === state.current.eoCorrect.join(' ');
+    state.checked = true;
+    state.total++;
+
+    $slots.classList.remove('has-words');
+    $slots.classList.add(ok ? 'correct' : 'wrong');
+
+    if (ok){
+        state.streak++;
+        state.correct++;
+        if (state.streak > state.best) state.best = state.streak;
+        $feedback.className = 'gen-feedback show ok';
+        $feedback.innerHTML = '✓ Правильно! <span class="gf-note">+1 к серии ('+state.streak+')</span>';
+        renderStats(); saveState(); updateCheckBtn();
+        clearTimeout(autoNextTimer);
+        autoNextTimer = setTimeout(nextSentence, 1000);
+    } else {
+        state.streak = 0;
+        $feedback.className = 'gen-feedback show err';
+        $feedback.innerHTML = '✕ Не совсем. Правильно:' +
+            '<span class="gf-answer">'+state.current.eoCorrect.join(' ')+'</span>';
+        renderStats(); saveState(); updateCheckBtn();
+    }
+}
+
+function hint(){
+    if (state.checked || !state.current) return;
+    const correct = state.current.eoCorrect;
+    const built = state.built;
+    let idx = 0;
+    for (let i = 0; i < correct.length; i++){
+        if (i >= built.length || built[i] !== correct[i]){ idx = i; break; }
+        if (i === correct.length - 1) idx = correct.length;
+    }
+    if (idx >= correct.length) return;
+    const target = correct[idx];
+
+    const btns = $pool.querySelectorAll('.gen-pool-word');
+    let found = false;
+    btns.forEach(b=>{
+        if (found) return;
+        if (b.textContent === target && !b.disabled){
+            b.classList.add('hint-glow');
+            setTimeout(()=>b.classList.remove('hint-glow'), 1500);
+            found = true;
+        }
+    });
+    if (found && global.VAToast) global.VAToast.show('Следующее слово: «'+target+'»');
+    else if (global.VAToast) global.VAToast.show('Проверьте уже поставленные слова');
+}
+
+function nextSentence(){
+    clearTimeout(autoNextTimer);
+    state.current = generateSentence(state.level);
+    state.built = [];
+    state.usedPoolIdx = new Set();
+    state.checked = false;
+    clearFeedback();
+    renderPrompt(); renderSlots(); renderPool();
+}
+
+$check.addEventListener('click', check);
+$hint.addEventListener('click', hint);
+$next.addEventListener('click', nextSentence);
+
+document.querySelectorAll('.gen-chip').forEach(c=>{
+    c.addEventListener('click', ()=>{
+        document.querySelectorAll('.gen-chip').forEach(x=>x.classList.remove('active'));
+        c.classList.add('active');
+        const v = c.dataset.level;
+        state.level = v === 'all' ? 'all' : +v;
+        saveState();
+        nextSentence();
+    });
+});
+
+document.addEventListener('keydown', e=>{
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Enter'){
+        e.preventDefault();
+        if (state.checked) nextSentence();
+        else if (state.current && state.built.length === state.current.eoCorrect.length) check();
+    } else if (e.key === 'Backspace'){
+        if (!state.checked && state.built.length > 0){
+            e.preventDefault();
+            removeFromSlot(state.built.length - 1);
+        }
+    }
+});
+
+function startGen(){
+    loadState();
+    renderStats();
+    document.querySelectorAll('.gen-chip').forEach(c=>{
+        const v = c.dataset.level;
+        const cmp = v === 'all' ? 'all' : +v;
+        c.classList.toggle('active', cmp === state.level);
+    });
+    nextSentence();
+}
+
+// Экспорт в window 
+window.VAPhrases = { start: startGen };
+
+})(window);
+
+/* ═══════════════════════════════════════════════════════════
+   ЗАПУСК
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function () {
+    VACore.init();
+    VATheme.init();
+    window.VAPhrases.start();
+    VACore.updateNavBadges();   // ← ДОБАВЛЕНО: обновляет все 4 бейджа курсов
+    if (window.VATheme) VATheme.animatePageIn(document.getElementById('genPage'));
+});
+</script>
+</body>
+</html>

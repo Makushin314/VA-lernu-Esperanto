@@ -1,0 +1,149 @@
+/* ============================================================
+   VA ESPERANTO · grammar.css
+   Грамматический справочник: поиск, статьи-аккордеоны
+   ============================================================ */
+
+.grammar-search {
+    width: 100%;
+    background: var(--input);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 14px 18px;
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+    font-family: inherit;
+    margin-bottom: 18px;
+    transition: border var(--transition);
+}
+.grammar-search:focus { border-color: var(--green); }
+
+.grammar-article {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color var(--transition);
+}
+.grammar-article:hover { border-color: var(--green); }
+.grammar-article.open { border-color: var(--green); }
+
+.grammar-article-header {
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    user-select: none;
+    transition: background var(--transition);
+}
+.grammar-article-header:hover { background: var(--card2); }
+
+.grammar-article-title {
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+.grammar-article-title .ga-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.grammar-article-chevron {
+    color: var(--muted);
+    transition: transform var(--transition);
+    font-size: 14px;
+    flex-shrink: 0;
+}
+.grammar-article.open .grammar-article-chevron { transform: rotate(90deg); }
+
+.grammar-article-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 22px;
+    font-size: 14.5px;
+    line-height: 1.8;
+}
+.grammar-article.open .grammar-article-body {
+    max-height: 3000px;
+    padding: 0 22px 22px;
+}
+
+.grammar-article-body h4 {
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 800;
+    margin: 16px 0 8px;
+}
+.grammar-article-body h4:first-child { margin-top: 0; }
+
+.grammar-article-body p { margin-bottom: 10px; }
+.grammar-article-body ul,
+.grammar-article-body ol { margin-left: 20px; margin-bottom: 10px; }
+.grammar-article-body li { margin-bottom: 4px; }
+
+.grammar-article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 13.5px;
+    background: var(--input);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.grammar-article-body th {
+    background: var(--card2);
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.grammar-article-body td {
+    padding: 8px 12px;
+    border-top: 1px solid var(--border);
+}
+.grammar-article-body td:first-child {
+    color: var(--green);
+    font-weight: 700;
+}
+
+.grammar-article-body code {
+    background: var(--input);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 13px;
+}
+.grammar-article-body .eo {
+    color: var(--green);
+    font-weight: 700;
+}
+.grammar-article-body .ru {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* --- Адаптив --- */
+@media (max-width: 700px) {
+    .grammar-article-header { padding: 14px 16px; }
+    .grammar-article-title { font-size: 14.5px; gap: 8px; }
+    .grammar-article-title .ga-icon { font-size: 18px; }
+    .grammar-article-body { padding: 0 16px; font-size: 14px; }
+    .grammar-article.open .grammar-article-body { padding: 0 16px 18px; }
+    .grammar-article-body table { font-size: 12.5px; }
+    .grammar-article-body th,
+    .grammar-article-body td { padding: 6px 8px; }
+}

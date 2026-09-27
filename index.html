@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="VA Esperanto — тренажёр языка эсперанто: курсы A1–B2, грамматика и 300 слов с интервальным повторением. Экосистема Vulpeto Abeleto." />
+<title>VA Esperanto — Изучай эсперанто</title>
+<link rel="icon" href="images/VAlogo.png" type="image/png" />
+
+<!-- ═══ Стили ═══ -->
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/home.css" />
+
+<!-- ═══ Мгновенное применение темы и позиции сайдбара (без вспышки) ═══ -->
+<script>
+(function () {
+    try {
+        var THEMES = {
+            dark:   { '--bg':'#0D110F','--card':'#151A17','--card2':'#1C231E','--input':'#202821','--border':'#29332C','--text':'#F3F6F3','--muted':'#9CA79E','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F' },
+            light:  { '--bg':'#F2F6F2','--card':'#FFFFFF','--card2':'#F7FAF7','--input':'#EEF3EE','--border':'#D9E2D9','--text':'#172019','--muted':'#68736B','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F' },
+            winter: { '--bg':'#0B1520','--card':'#132234','--card2':'#182B40','--input':'#1D344C','--border':'#274562','--text':'#EAF4FB','--muted':'#8FA8C0','--green':'#4DA6FF','--green-hover':'#6BB8FF','--danger':'#E85D75' },
+            forest: { '--bg':'#0A130E','--card':'#122018','--card2':'#17291F','--input':'#1C3126','--border':'#253D2F','--text':'#E8F2E8','--muted':'#8FAF93','--green':'#2E8B57','--green-hover':'#3DA66A','--danger':'#C9645B' },
+            autumn: { '--bg':'#1A1210','--card':'#241A15','--card2':'#2E211B','--input':'#342720','--border':'#42332A','--text':'#F5EDE5','--muted':'#B8A398','--green':'#D2691E','--green-hover':'#E67E22','--danger':'#C0392B' },
+            cat:    { '--bg':'#14101C','--card':'#1C1826','--card2':'#231E30','--input':'#2A2338','--border':'#3A2F4A','--text':'#F0EAF5','--muted':'#9C93B0','--green':'#F5A623','--green-hover':'#FFB84D','--danger':'#E85D75' }
+        };
+        var root = document.documentElement;
+
+        // Тема
+        var themeKey = localStorage.getItem('va_eo_theme') || 'dark';
+        var theme = THEMES[themeKey] || THEMES.dark;
+        root.setAttribute('data-theme-key', themeKey);
+        for (var k in theme) {
+            if (Object.prototype.hasOwnProperty.call(theme, k)) {
+                root.style.setProperty(k, theme[k]);
+            }
+        }
+
+        // Позиция сайдбара — на <html>, CSS использует html[data-sidebar-pos]
+        var pos = localStorage.getItem('va_eo_sidebar_pos');
+        if (!pos) pos = window.innerWidth <= 700 ? 'top' : 'left';
+        if (pos !== 'left' && pos !== 'top') pos = 'left';
+        root.setAttribute('data-sidebar-pos', pos);
+                // Резервный таймер: если theme.js не выполнится — показать сайдбар в исходном виде
+        setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-nav-ready')) {
+                document.documentElement.setAttribute('data-nav-ready', '1');
+            }
+        }, 1200);
+    } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SIDEBAR
+     ═══════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+    <a class="logo" href="index.html" title="VA Esperanto — на главную">
+        <div class="logo-icon">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 2 L60 36.25 L95.65 35.17 L66.17 55.25 L78.21 88.83 L50 67 L21.79 88.83 L33.83 55.25 L4.35 35.17 L40 36.25 Z"/>
+    </svg>
+</div>
+        <div class="logo-text">
+            <h1>VA Esperanto</h1>
+            <span>Lernu Esperanton</span>
+        </div>
+    </a>
+
+    <nav id="nav">
+        <a class="nav-btn active" href="index.html" title="Главная">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Главная</span>
+        </a>
+
+        <div class="nav-section-label">Kursoj</div>
+        <a class="nav-btn" href="courses/a1.html" title="Уровень A1">
+            <span class="nav-icon">🌱</span>
+            <span class="nav-label">Уровень A1</span>
+            <span class="nav-badge" id="navBadgeA1">0/18</span>
+        </a>
+        <a class="nav-btn" href="courses/a2.html" title="Уровень A2">
+            <span class="nav-icon">🌿</span>
+            <span class="nav-label">Уровень A2</span>
+            <span class="nav-badge" id="navBadgeA2">0/16</span>
+        </a>
+        <a class="nav-btn" href="courses/b1.html" title="Уровень B1">
+            <span class="nav-icon">🌳</span>
+            <span class="nav-label">Уровень B1</span>
+            <span class="nav-badge" id="navBadgeB1">0/18</span>
+        </a>
+        <a class="nav-btn" href="courses/b2.html" title="Уровень B2">
+            <span class="nav-icon">🌲</span>
+            <span class="nav-label">Уровень B2</span>
+            <span class="nav-badge" id="navBadgeB2">0/12</span>
+        </a>
+
+        <div class="nav-section-label">Rimedoj</div>
+        <a class="nav-btn" href="grammar.html" title="Грамматика">
+            <span class="nav-icon">📖</span>
+            <span class="nav-label">Грамматика</span>
+        </a>
+        <a class="nav-btn" href="flashcards.html" title="Слова">
+            <span class="nav-icon">🃏</span>
+            <span class="nav-label">Слова</span>
+            <span class="nav-badge" id="navBadgeWords">0/466</span>
+        </a>
+        <a class="nav-btn" href="phrases.html" title="Конструктор фраз">
+            <span class="nav-icon">🧱</span>
+            <span class="nav-label">Конструктор</span>
+        </a>
+        <div class="nav-section-label">Aliaj</div>
+        <button class="nav-btn" data-page="settings" title="Настройки">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Настройки</span>
+        </button>
+    </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════════════════════════════════ -->
+<main class="content" id="content">
+
+    <!-- ─── ГЛАВНАЯ ─── -->
+    <section class="page active" id="page-home">
+        <div class="page-header">
+            <h2 id="homeGreeting">Saluton!</h2>
+            <p>Bonvenon al VA Esperanto — твой путь в международный язык</p>
+        </div>
+
+        <div id="continueCard"></div>
+
+        <div class="hero">
+            <div class="hero-greeting" id="heroName">Привет, ученик! 👋</div>
+            <div class="hero-sub">Продолжай заниматься — прогресс важнее идеала</div>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hs-num" id="hsLessons">0</div>
+                    <div class="hs-lbl">Уроков пройдено</div>
+                </div>
+                <div class="hero-stat fire">
+                    <div class="hs-num" id="hsStreak">0🔥</div>
+                    <div class="hs-lbl">Серия дней</div>
+                </div>
+                <div class="hero-stat gold">
+                    <div class="hs-num" id="hsXp">0</div>
+                    <div class="hs-lbl">XP всего</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hs-num" id="hsWords">0</div>
+                    <div class="hs-lbl">Слов изучено</div>
+                </div>
+            </div>
+
+            <div class="goal-row">
+                <span style="font-size:20px;">🎯</span>
+                <div class="goal-bar">
+                    <div class="goal-bar-fill" id="goalFill" style="width:0%;"></div>
+                </div>
+                <span class="goal-text" id="goalText">0 / 20 XP сегодня</span>
+            </div>
+        </div>
+
+        <div class="section-title">Уровни</div>
+        <div class="levels-grid" id="levelsGrid"></div>
+
+        <div class="section-title">Достижения</div>
+        <div class="ach-grid" id="achGrid"></div>
+
+        <div class="section-title">Быстрый доступ</div>
+        <div class="quick-links">
+            <a class="quick-link" href="grammar.html">
+                <span class="ql-icon">📖</span>
+                <span class="ql-name">Грамматика</span>
+                <span class="ql-desc">Справочник по темам</span>
+            </a>
+            <a class="quick-link" href="flashcards.html">
+                <span class="ql-icon">🃏</span>
+                <span class="ql-name">466 слов</span>
+                <span class="ql-desc">Карточки с SRS</span>
+            </a>
+            <a class="quick-link" href="courses/a1.html">
+                <span class="ql-icon">🌱</span>
+                <span class="ql-name">Начать с A1</span>
+                <span class="ql-desc">Основы языка</span>
+            </a>
+            <a class="quick-link" href="courses/b2.html">
+                <span class="ql-icon">🌲</span>
+                <span class="ql-name">Перейти к B2</span>
+                <span class="ql-desc">Продвинутый уровень</span>
+            </a>
+        </div>
+
+        <div class="page-footer">Vulpeto Abeleto • 2026</div>
+    </section>
+
+    <!-- ─── НАСТРОЙКИ ─── -->
+    <section class="page" id="page-settings">
+        <div class="page-header">
+            <h2>⚙️ Настройки</h2>
+            <p>Персонализация и управление данными</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">👤 Профиль</div>
+            <div class="card-sub">Как к тебе обращаться и какая цель на день</div>
+            <div class="field-group">
+                <label for="profileName">Имя</label>
+                <input type="text" id="profileName" placeholder="Твоё имя" maxlength="30" autocomplete="off" />
+            </div>
+            <div class="field-group">
+                <label for="profileGoal">Дневная цель (XP)</label>
+                <select id="profileGoal">
+                    <option value="10">10 XP — лёгкая</option>
+                    <option value="20">20 XP — стандарт</option>
+                    <option value="30">30 XP — средняя</option>
+                    <option value="50">50 XP — серьёзная</option>
+                    <option value="100">100 XP — хардкор</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">🎨 Оформление</div>
+            <div class="card-sub">Выберите тему приложения</div>
+            <div class="theme-picker" id="themePicker"></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📐 Расположение панели</div>
+            <div class="card-sub">Где разместить меню навигации</div>
+            <div class="sidebar-pos-picker" id="sidebarPosPicker">
+                <div class="sidebar-pos-option" data-pos="left">
+                    <div class="pos-icon">◀</div>
+                    <div class="pos-name">Слева</div>
+                </div>
+                <div class="sidebar-pos-option" data-pos="top">
+                    <div class="pos-icon">▲</div>
+                    <div class="pos-name">Сверху</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">💾 Данные</div>
+            <div class="card-sub">Экспорт, импорт и сброс прогресса</div>
+            <div class="actions-bar" style="margin-bottom:0;">
+                <button class="btn" id="exportBtn">📥 Экспорт JSON</button>
+                <button class="btn btn-secondary" id="importBtn">📤 Импорт JSON</button>
+                <input type="file" id="importFile" accept=".json,application/json" style="display:none;" />
+                <button class="btn btn-danger" id="clearAllBtn">🗑 Удалить всё</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">ℹ️ О программе</div>
+            <p style="color:var(--muted); font-size:14px; line-height:1.7;">
+                <b style="color:var(--text);">VA Esperanto</b> — тренажёр языка эсперанто:
+                курсы A1–B2 по методике Бориса Колкера, грамматический справочник
+                и 466 самых частотных слов с интервальным повторением.<br><br>
+                Входит в экосистему клуба <b style="color:var(--green);">Vulpeto Abeleto</b>.<br>
+                Все данные хранятся локально в вашем браузере. Ничего никуда не отправляется.<br><br>
+                <b style="color:var(--green);">Bonan lernadon! 🌍</b>
+            </p>
+        </div>
+
+        <div class="page-footer">Vulpeto Abeleto • 2026</div>
+    </section>
+
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     СКРИПТЫ
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- 1. Данные курсов (нужны core.js для подсчёта прогресса) -->
+<script src="data/courses-a1.js"></script>
+<script src="data/courses-a2.js"></script>
+<script src="data/courses-b1.js"></script>
+<script src="data/courses-b2.js"></script>
+
+<!-- Данные слов — нужны для подсчёта общего количества в бейдже -->
+<script src="data/words.js"></script>       <!-- на courses/*.html: "../data/words.js" -->
+
+<!-- Данные курсов -->
+<script src="data/courses-a1.js"></script>
+
+<!-- 2. Модули приложения -->
+<script src="js/ui.js"></script>
+<script src="js/core.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/home.js"></script>
+<script src="js/settings.js"></script>
+
+<!-- 3. Запуск главной -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Инициализация
+    VACore.init();
+    VATheme.init();
+    VAHome.render();
+    VASettings.init();
+
+    // Навигация между «Главная» и «Настройки» без перезагрузки
+    function activatePage(pageId) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector('.nav-btn[data-page="' + pageId + '"]');
+        if (activeBtn) activeBtn.classList.add('active');
+
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById('page-' + pageId);
+        if (target) {
+            target.classList.add('active');
+            // Перезапуск анимации «выезда» при каждом переключении
+            VATheme.animatePageIn(target);
+        }
+
+        if (pageId === 'settings') {
+            VASettings.render();
+            VATheme.renderPicker();
+            VATheme.renderSidebarPosPicker();
+        }
+
+        const content = document.getElementById('content');
+        if (content) content.scrollTop = 0;
+
+        if (history.replaceState) {
+            const hash = pageId === 'settings' ? '#settings' : '';
+            history.replaceState(null, '', window.location.pathname + hash);
+        }
+    }
+
+    // Кнопки с data-page (Настройки)
+    document.querySelectorAll('.nav-btn[data-page]').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            activatePage(btn.dataset.page);
+        });
+    });
+
+    // Кнопки-ссылки на главную
+    document.querySelectorAll('.nav-btn[href="index.html"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            activatePage('home');
+        });
+    });
+
+    // Открытие по хешу #settings (при заходе со страницы курса)
+    if (window.location.hash === '#settings') {
+        activatePage('settings');
+    }
+
+    window.addEventListener('hashchange', function () {
+        if (window.location.hash === '#settings') {
+            activatePage('settings');
+        } else if (window.location.hash === '' || window.location.hash === '#home') {
+            activatePage('home');
+        }
+    });
+});
+</script>
+</body>
+</html>
